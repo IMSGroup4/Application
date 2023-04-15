@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         override fun onOpen(webSocket: WebSocket, response: Response) {
             webSocket.send("Hello!")
             webSocket.send("What's up ?")
-            webSocket.send("deadbeef".decodeHex())
+            // webSocket.send("deadbeef".decodeHex())
             webSocket.close(NORMAL_CLOSURE_STATUS, "Goodbye !")
         }
 
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun start() {
-        val request: Request = Request.Builder().url("wss://demo.piesocket.com/v3/channel_123?api_key=VCXCEuvhGcBDP7XhiJJUDvR1e1D3eiVjgZ9VRiaV&notify_self").build()
+        val request: Request = Request.Builder().url("wss://ws.postman-echo.com/raw").build()
         // val request: Request = Request.Builder().url("wss://ims-group4-backend.azurewebsites.net/ws/app").build()
         val listener: EchoWebSocketListener = EchoWebSocketListener()
         val ws: WebSocket = client!!.newWebSocket(request, listener)
