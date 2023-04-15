@@ -11,4 +11,6 @@
     <color name="success">#4BB543</color>
     <color name="failure">#FF0000 </color>
     <color name="inactive">#979797</color>
+    <color name="bg">#E6E9F0</color>
+    <color name="textColor">#FEFEFE</color>
 </resources>
