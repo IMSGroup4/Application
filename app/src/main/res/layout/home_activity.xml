@@ -7,16 +7,19 @@
     android:background="@color/bg">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
         android:background="@color/main_color"
-        android:paddingBottom="16dp">
+        android:paddingBottom="24sp"
+        tools:ignore="MissingConstraints">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="24sp"
             tools:ignore="MissingConstraints">
+
             <TextView
                 android:id="@+id/IMS"
                 android:layout_width="wrap_content"
@@ -68,71 +71,69 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-
-
     </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_color"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/homeButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/main_color"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <Button
-                android:id="@+id/homeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/main_color"
-                android:drawableTop="@drawable/home"
-                android:padding="20sp"
-                android:text="@string/home" />
+            android:layout_weight="1"
+            android:backgroundTint="@color/main_color"
+            android:drawableTop="@drawable/home"
+            android:padding="20sp"
+            android:text="@string/home" />
 
 
-            <Button
-                android:id="@+id/mapButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/main_color"
-                android:drawableTop="@drawable/map"
-                android:padding="20sp"
-                android:text="@string/map" />
+        <Button
+            android:id="@+id/mapButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/main_color"
+            android:drawableTop="@drawable/map"
+            android:padding="20sp"
+            android:text="@string/map" />
 
-            <Button
-                android:id="@+id/controlButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/main_color"
-                android:drawableTop="@drawable/controller"
-                android:padding="20sp"
-                android:text="@string/control" />
+        <Button
+            android:id="@+id/controlButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/main_color"
+            android:drawableTop="@drawable/controller"
+            android:padding="20sp"
+            android:text="@string/control" />
 
-            <Button
-                android:id="@+id/objectsButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/main_color"
-                android:drawableTop="@drawable/object"
-                android:padding="20sp"
-                android:text="@string/object" />
+        <Button
+            android:id="@+id/objectsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/main_color"
+            android:drawableTop="@drawable/object"
+            android:padding="20sp"
+            android:text="@string/object" />
 
-        </LinearLayout>
+    </LinearLayout>
 
     <Button
         android:id="@+id/connectButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/connect_ulla"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
         android:backgroundTint="@color/main_color"
-        tools:ignore="MissingConstraints"
         android:padding="15sp"
-        tools:layout_editor_absoluteY="478dp" />
+        android:text="@string/connect_ulla"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="60sp"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>
