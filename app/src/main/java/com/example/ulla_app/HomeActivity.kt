@@ -1,7 +1,6 @@
-
-
 package com.example.ulla_app
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -11,14 +10,22 @@ import com.example.ulla_app.R
 import okhttp3.*
 import okio.ByteString
 import okio.ByteString.Companion.decodeHex
+import androidx.fragment.app.Fragment
+import com.example.ulla_app.fragments.*
 
 
 class HomeActivity : AppCompatActivity() {
     private var start: Button? = null
-    private var output: TextView? = null
-    private var client: OkHttpClient? = null
+    private var output: TextView? = null 
+    var client: OkHttpClient? = null
+    lateinit var webSocket: WebSocket
 
-    private inner class EchoWebSocketListener : WebSocketListener() {
+    private val mapFragment = MapFragment()
+    private val controlFragment = ControlFragment()
+    private val homeFragment = HomeFragment()
+    private val obstaclesFragment = ObstaclesFragment()
+
+    /*inner class EchoWebSocketListener : WebSocketListener() {
         private val NORMAL_CLOSURE_STATUS = 1000
 
         override fun onOpen(webSocket: WebSocket, response: Response) {
@@ -29,6 +36,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         override fun onMessage(webSocket: WebSocket, text: String) {
+
             output("Receiving : $text")
         }
 
@@ -44,31 +52,40 @@ class HomeActivity : AppCompatActivity() {
         override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
             output("Error : ${t.message}")
         }
-    }
+    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.supportActionBar?.hide()
         setContentView(R.layout.home_activity)
-        start = findViewById(R.id.start)
-        output = findViewById(R.id.output)
-        client = OkHttpClient()
+        val obstaclesButton = findViewById<Button>(R.id.obstacles_button)
+        val mapButton = findViewById<Button>(R.id.map_button)
+        val controlButton = findViewById<Button>(R.id.control_button)
+        val homeButton = findViewById<Button>(R.id.home_button)
 
-        start?.setOnClickListener { start() }
-    }
 
-    private fun start() {
-        val request: Request = Request.Builder().url("wss://ws.postman-echo.com/raw").build()
-        // val request: Request = Request.Builder().url("wss://ims-group4-backend.azurewebsites.net/ws/app").build()
-        val listener: EchoWebSocketListener = EchoWebSocketListener()
-        val ws: WebSocket = client!!.newWebSocket(request, listener)
+        replaceFragment(homeFragment)
 
-        client?.dispatcher?.executorService?.shutdown()
-    }
-
-    private fun output(txt: String) {
-        runOnUiThread {
-            output?.text = "${output?.text}\n\n$txt"
+        mapButton.setOnClickListener {
+            replaceFragment(mapFragment)
         }
+
+        controlButton.setOnClickListener {
+            replaceFragment(controlFragment)
+        }
+
+        obstaclesButton.setOnClickListener {
+            replaceFragment(obstaclesFragment)
+        }
+
+        homeButton.setOnClickListener {
+            replaceFragment(homeFragment)
+        }
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, fragment)
+        transaction.commit()
     }
 }

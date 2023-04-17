@@ -219,7 +219,7 @@
             android:backgroundTint="@color/main_color"
             android:drawableTop="@drawable/object"
             android:padding="20sp"
-            android:text="@string/object" />
+            android:text="@string/obstacles" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
