@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.ulla_app
 
 import android.util.Log
 import okhttp3.Response
