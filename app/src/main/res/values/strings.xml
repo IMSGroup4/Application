@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Ulla</string>
+    <string name="ims">IMS</string>
+    <string name="robotic">ROBOTICS</string>
+    <string name="get_started">Get Started</string>
+    <string name="home">Home</string>
+    <string name="control">Control</string>
+    <string name="map">Map</string>
+    <string name="object">Objects</string>
+    <string name="connect_ulla">Connect To Ulla</string>
+    <string name="disconnect_ulla">Disconnect From Ulla</string>
+    <string name="connected">Connected</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="mowerIcon">Animated Mower Icon</string>
+
 </resources>
