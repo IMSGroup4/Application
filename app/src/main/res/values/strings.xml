@@ -12,8 +12,6 @@
     <string name="connected">Connected</string>
     <string name="disconnected">Disconnected</string>
     <string name="delete">Delete</string>
-
-
     <string name="mowerIcon">Animated Mower Icon</string>
 
 </resources>
