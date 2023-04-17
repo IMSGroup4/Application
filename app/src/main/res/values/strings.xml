@@ -11,9 +11,6 @@
     <string name="disconnect_ulla">Disconnect From Ulla</string>
     <string name="connected">Connected</string>
     <string name="disconnected">Disconnected</string>
-
-
-
     <string name="mowerIcon">Animated Mower Icon</string>
 
 </resources>
