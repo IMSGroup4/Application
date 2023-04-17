@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bg"
+    >
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_color"
+        android:paddingBottom="24sp"
+        tools:ignore="MissingConstraints">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="24sp"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:id="@+id/IMS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:letterSpacing="0.4"
+                android:text="@string/ims"
+                android:textColor="@color/textColor"
+                android:textSize="36sp"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteY="16dp" />
+
+            <TextView
+                android:id="@+id/Robotics"
+                android:layout_width="108dp"
+                android:layout_height="17dp"
+                android:letterSpacing="0.36"
+                android:text="@string/robotic"
+                android:textColor="@color/textColor"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/IMS"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/IMS"
+                app:layout_constraintTop_toBottomOf="@+id/IMS" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/IMS"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/IMS">
+
+                <TextView
+
+                    android:id="@+id/connection_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="20sp"
+                    android:background="@color/failure"
+                    android:padding="5sp"
+                    android:text="@string/disconnected" />
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30sp"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <ScrollView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/scanned_object"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10sp"
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10sp"
+                    android:background="@color/textColor">
+
+                    <ImageView
+                        android:id="@+id/object_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/image" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/object_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="TITLE"
+                            android:textSize="24sp"
+                            android:gravity="center"
+                            />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15sp"
+                            >
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Coordination:"
+                                android:layout_weight="1"
+                                />
+
+                            <TextView
+                                android:id="@+id/x_coordinate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.5"
+                                android:text="X"
+                                android:gravity="center"
+                                />
+                            <TextView
+                                android:id="@+id/y_coordinate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.5"
+                                android:text="Y"
+                                android:gravity="center"
+
+                                />
+                        </LinearLayout>
+                        <Button
+                            android:id="@+id/delete_btn"
+                            android:layout_width="100sp"
+                            android:layout_height="40sp"
+                            android:backgroundTint="@color/failure"
+                            android:text="@string/delete"
+                            android:textSize="12sp"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="43sp"
+                            />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_color"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/home_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/main_color"
+            android:drawableTop="@drawable/home"
+            android:padding="20sp"
+            android:text="@string/home" />
+
+
+        <Button
+            android:id="@+id/map_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/main_color"
+            android:drawableTop="@drawable/map"
+            android:padding="20sp"
+            android:text="@string/map" />
+
+        <Button
+            android:id="@+id/control_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/main_color"
+            android:drawableTop="@drawable/controller"
+            android:padding="20sp"
+            android:text="@string/control" />
+
+        <Button
+            android:id="@+id/objects_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/main_color"
+            android:drawableTop="@drawable/object"
+            android:padding="20sp"
+            android:text="@string/object" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
