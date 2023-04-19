@@ -16,6 +16,7 @@ import com.example.ulla_app.classes.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.WebSocket
+import org.json.JSONObject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,11 +49,18 @@ class HomeFragment : Fragment() {
         val connectButton = view.findViewById<Button>(R.id.connect_button)
         val disconnectButton = view.findViewById<Button>(R.id.disconnect_button)
         val output = view.findViewById<TextView>(R.id.output)
+
         connectButton?.setOnClickListener {
-            myWebSocket.connect()
+            //TODO: Start loading here
+            val connected = myWebSocket.connect()
+            // TODO: Stop loading here
+            myWebSocket.send(JSONObject().apply {
+                put("action", "move")
+            })
         }
+
         disconnectButton?.setOnClickListener {
-            myWebSocket.disconnect()
+            val disconnected = myWebSocket.disconnect()
         }
 
         myWebSocket.messageListener { message ->

@@ -19,7 +19,7 @@ class MyWebSocket {
     private val wsListener = MyWebSocketListener()
     private val client: OkHttpClient = OkHttpClient()
 
-    fun connect() {
+    fun connect(): Boolean {
         Log.d(TAG, "connect() called")
         val request = Request.Builder()
             .url("wss://ims-group4-backend.azurewebsites.net/ws/app")
@@ -27,15 +27,18 @@ class MyWebSocket {
 
         ws = client.newWebSocket(request, wsListener)
 
-        ws!!.send("App connected") // TODO: should send via button(user intertracion from view) , not in main, just for test
+        return ws != null
     }
 
-    fun disconnect(){
+    fun disconnect(): Boolean {
         if(ws != null){
             val statusCode = 1000 // Normal closure status code
             val reason = "App disconnected manually"
             ws!!.close(statusCode, reason)
             Log.d(TAG, "disconnect() called")
+            return true
+        } else {
+            return false
         }
     }
 
