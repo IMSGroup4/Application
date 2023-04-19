@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ulla_app.HomeActivity
 import com.example.ulla_app.R
@@ -28,8 +29,6 @@ private const val ARG_PARAM2 = "param2"
  */
 class HomeFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var client: OkHttpClient = OkHttpClient()
-    private var ws: WebSocket? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,52 +45,21 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //client = OkHttpClient()
-        val start = view.findViewById<Button>(R.id.start)
-        //val output = view.findViewById<Button>(R.id.output)
-        start?.setOnClickListener { start() }
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-
-    private fun start() {
-        val request = Request.Builder()
-            .url("wss://ims-group4-backend.azurewebsites.net/ws/app")
-            .build()
-
-        val listener = MyWebSocketListener()
-        ws = client.newWebSocket(request, listener)
-
-        ws!!.send("Test message") // should send via button(user intertracion from view) , not in main, just for test
-
-        Handler(Looper.getMainLooper()).postDelayed({ // Close socket after 5 seconds
-            val statusCode = 1000 // Normal closure status code
-            val reason = "Closing the connection"
-            ws!!.close(statusCode, reason)
-        }, 50000) // Delay of 5 seconds
-    }
-
-    /*private fun output(txt: String) {
-        runOnUiThread {
-            output?.text = "${output?.text}\n\n$txt"
+        val connectButton = view.findViewById<Button>(R.id.connect_button)
+        val disconnectButton = view.findViewById<Button>(R.id.disconnect_button)
+        val output = view.findViewById<TextView>(R.id.output)
+        output.text = "HELLOOOOOOOO :)"
+        connectButton?.setOnClickListener {
+            myWebSocket.connect()
         }
-    }*/
+        disconnectButton?.setOnClickListener {
+            myWebSocket.disconnect()
+        }
+
+        myWebSocket.messageListener { message ->
+            activity?.runOnUiThread {
+                output.text = message
+            }
+        }
+    }
 }
