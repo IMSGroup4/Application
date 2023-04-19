@@ -6,17 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".fragments.HomeFragment">
 
-    <Button
-        android:id="@+id/start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/main_color"
-        android:padding="15sp"
-        android:text="@string/connect_ulla"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
+
 
     <TextView
         android:id="@+id/output"
@@ -24,11 +14,36 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:textSize="16sp"
+        android:text="OUTPUT TEXT HERE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.253" />
+
+    <Button
+        android:id="@+id/connect_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/main_color"
+        android:padding="15sp"
+        android:text="@string/connect_ulla"
+        app:layout_constraintBottom_toTopOf="@id/disconnect_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/disconnect_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/main_color"
+        android:padding="15sp"
+        android:text="@string/disconnect_ulla"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

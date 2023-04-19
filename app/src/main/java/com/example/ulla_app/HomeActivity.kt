@@ -25,35 +25,6 @@ class HomeActivity : AppCompatActivity() {
     private val homeFragment = HomeFragment()
     private val obstaclesFragment = ObstaclesFragment()
 
-    /*inner class EchoWebSocketListener : WebSocketListener() {
-        private val NORMAL_CLOSURE_STATUS = 1000
-
-        override fun onOpen(webSocket: WebSocket, response: Response) {
-            webSocket.send("Hello!")
-            webSocket.send("What's up ?")
-            // webSocket.send("deadbeef".decodeHex())
-            webSocket.close(NORMAL_CLOSURE_STATUS, "Goodbye !")
-        }
-
-        override fun onMessage(webSocket: WebSocket, text: String) {
-
-            output("Receiving : $text")
-        }
-
-        override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
-            output("Receiving bytes : ${bytes.hex()}")
-        }
-
-        override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-            webSocket.close(NORMAL_CLOSURE_STATUS, null)
-            output("Closing : $code / $reason")
-        }
-
-        override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-            output("Error : ${t.message}")
-        }
-    }*/
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.supportActionBar?.hide()
@@ -62,7 +33,6 @@ class HomeActivity : AppCompatActivity() {
         val mapButton = findViewById<Button>(R.id.map_button)
         val controlButton = findViewById<Button>(R.id.control_button)
         val homeButton = findViewById<Button>(R.id.home_button)
-
 
         replaceFragment(homeFragment)
 
