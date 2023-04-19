@@ -48,7 +48,6 @@ class HomeFragment : Fragment() {
         val connectButton = view.findViewById<Button>(R.id.connect_button)
         val disconnectButton = view.findViewById<Button>(R.id.disconnect_button)
         val output = view.findViewById<TextView>(R.id.output)
-        output.text = "HELLOOOOOOOO :)"
         connectButton?.setOnClickListener {
             myWebSocket.connect()
         }
