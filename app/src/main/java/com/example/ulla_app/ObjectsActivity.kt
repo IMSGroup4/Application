@@ -20,6 +20,6 @@ class ObjectsActivity : AppCompatActivity() {
         val x_coor = findViewById<TextView>(R.id.x_coordinate)
         val y_coor = findViewById<TextView>(R.id.y_coordinate)
         val delete_btn = findViewById<Button>( R.id.delete_btn)
-        val obstacleList : ObstacleList
+        val obstacleList = ObstacleList()
     }
 }
