@@ -1,20 +1,108 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ObstaclesFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bg"
+    >
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/obstacles_fragment"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30sp"
+        tools:ignore="MissingConstraints">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10sp"
+                >
+
+                <LinearLayout
+                    android:id="@+id/scanned_object"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10sp"
+                    android:layout_marginTop="10sp"
+                    android:background="@color/textColor">
+
+                    <ImageView
+                        android:id="@+id/object_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/image" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/object_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="TITLE"
+                            android:textSize="24sp"
+                            android:gravity="center"
+                            />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15sp"
+                            >
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Coordination:"
+                                android:layout_weight="1"
+                                />
+
+                            <TextView
+                                android:id="@+id/x_coordinate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.5"
+                                android:text="X"
+                                android:gravity="center"
+                                />
+                            <TextView
+                                android:id="@+id/y_coordinate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.5"
+                                android:text="Y"
+                                android:gravity="center"
+
+                                />
+                        </LinearLayout>
+                        <Button
+                            android:id="@+id/delete_btn"
+                            android:layout_width="100sp"
+                            android:layout_height="50sp"
+                            android:backgroundTint="@color/failure"
+                            android:text="@string/delete"
+                            android:textSize="12sp"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="43sp"
+                            />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

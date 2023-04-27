@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.ulla_app.classes.ObstacleList
 
 class ObjectsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,14 +13,6 @@ class ObjectsActivity : AppCompatActivity() {
         this.supportActionBar?.hide()
         setContentView(R.layout.objects_activity)
 
-        val home_button = findViewById<Button>(R.id.home_button)
-        val map_button = findViewById<Button>(R.id.map_button)
-        val control_button = findViewById<Button>(R.id.control_button)
-        val title = findViewById<TextView>(R.id.object_title)
-        val image = findViewById<ImageView>(R.id.object_image)
-        val x_coor = findViewById<TextView>(R.id.x_coordinate)
-        val y_coor = findViewById<TextView>(R.id.y_coordinate)
-        val delete_btn = findViewById<Button>( R.id.delete_btn)
-        val obstacleList = ObstacleList()
+
     }
 }
