@@ -1,6 +1,7 @@
 package com.example.ulla_app.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,8 @@ import kotlinx.coroutines.joinAll
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Use the [ControlFragment.newInstance] factory method to
@@ -21,21 +23,31 @@ import kotlinx.coroutines.joinAll
 class ControlFragment : Fragment() {
 
     // TODO: Rename and change types of parameters
-    var joystickView: Joystick? = null
+    //var joystickView: Joystick? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(com.example.ulla_app.R.layout.fragment_control, container, false)
+
+        Log.d("debug", "onCreateView before")
+        var test = inflater.inflate(R.layout.fragment_control, container, false)
+        if (test != null) {
+            Log.d("debug", "not null")
+        }
+        else {
+            Log.d("debug", "null")
+        }
+
+        return inflater.inflate(R.layout.fragment_control, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        Log.d("debug", "onViewCreated")
         super.onViewCreated(view, savedInstanceState)
-        joystickView = view?.findViewById<Joystick>(R.id.joystickView)
+        val joystickView = view.findViewById<Joystick>(R.id.joystickView)
+        view.invalidate()
     }
 }
