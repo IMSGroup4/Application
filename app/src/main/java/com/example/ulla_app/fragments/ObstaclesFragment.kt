@@ -71,6 +71,8 @@ class ObstaclesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        //This code is just for me to get started.
         val scannedObject = view.findViewById<LinearLayout>(R.id.scanned_object)
         val title = view.findViewById<TextView>(R.id.object_title)
         val image = view.findViewById<ImageView>(R.id.object_image)
