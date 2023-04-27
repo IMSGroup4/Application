@@ -6,19 +6,25 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PorterDuff
+import android.util.AttributeSet
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import java.lang.Integer.min
 
 
-class Joystick constructor(context: Context) : View(context) {
+class Joystick @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : View(context, attrs, defStyleAttr) {
 
     private fun getScreenWidth(): Int {
-        return Resources.getSystem().displayMetrics.widthPixels
+        return context.resources.displayMetrics.widthPixels
     }
 
     private fun getScreenHeight(): Int {
-        return Resources.getSystem().displayMetrics.heightPixels
+        return context.resources.displayMetrics.heightPixels
     }
 
     //private val myCanvas = Canvas();
@@ -32,12 +38,46 @@ class Joystick constructor(context: Context) : View(context) {
     private var baseRadius = (min(widthh!!, heightt!!) / 3).toFloat();
     private var hatRadius = (min(widthh!!, heightt!!) / 5).toFloat();
 
+    private var hatX = centerX
+    private var hatY = centerY
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
         colors.setARGB(255, 50, 50, 50)
         canvas.drawCircle(centerX!!, centerY!!, baseRadius!!, colors)
         colors.setARGB(255, 0, 0, 255)
-        canvas.drawCircle(centerX!!, centerY!!, hatRadius!!, colors)
+        canvas.drawCircle(hatX, hatY, hatRadius, colors)
     }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        val action = event.action
+        if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
+            // Update the position of the joystick based on the touch coordinates
+            val x = event.x
+            val y = event.y
+            val dx = x - centerX
+            val dy = y - centerY
+            if (dx * dx + dy * dy <= baseRadius * baseRadius) {
+                hatX = x
+                hatY = y
+            } else {
+                val angle = Math.atan2(dy.toDouble(), dx.toDouble())
+                hatX = centerX + (baseRadius * Math.cos(angle)).toFloat()
+                hatY = centerY + (baseRadius * Math.sin(angle)).toFloat()
+            }
+            // Redraw the joystick
+            invalidate()
+            return true
+        } else if (action == MotionEvent.ACTION_UP) {
+            // Reset the position of the joystick to the center
+            hatX = centerX
+            hatY = centerY
+            // Redraw the joystick
+            invalidate()
+            return true
+        }
+        return super.onTouchEvent(event)
+    }
+
 }
