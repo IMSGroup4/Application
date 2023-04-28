@@ -17,6 +17,5 @@
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/obstacle_item"/>
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

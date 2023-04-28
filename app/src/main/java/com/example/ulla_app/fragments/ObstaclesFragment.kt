@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ulla_app.R
 import com.example.ulla_app.classes.ObstacleList
+import com.example.ulla_app.classes.RecyclerViewAdapter
+import com.example.ulla_app.dataclasses.DummyData
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
@@ -26,26 +28,26 @@ class ObstaclesFragment : Fragment() {
     private lateinit var deleteBtn: FloatingActionButton
     private var param1: String? = null
     private var param2: String? = null
+
+    private lateinit var adapter: RecyclerViewAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var dummyDataArrayList: ArrayList<DummyData>  //List of objects
+
+    lateinit var title: Array<String>
+    lateinit var x: ArrayList<Int>
+    lateinit var y: ArrayList<Int>
+
+
     private val obstacleList = ObstacleList()
-
-
-    data class Obstacle(val title: String, val x: String, val y: String)
-    val obstacles = listOf(
-        Obstacle("Vase", "28.1215", "51.4512"),
-        Obstacle("Cat", "32.1254","21.4511"),
-        Obstacle("Cow", "25.1254","11.4515")
-    )
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       println(obstacles)
+
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
     }
 
     override fun onCreateView(
@@ -53,34 +55,44 @@ class ObstaclesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.obstacle_item, container, false)
+        return inflater.inflate(R.layout.fragment_obstacles, container, false)
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initDummyData()
+        val layoutManager = LinearLayoutManager(context)
+        recyclerView = view.findViewById(R.id.recycle_view)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.setHasFixedSize(true)
+        adapter = RecyclerViewAdapter(dummyDataArrayList)
+        recyclerView.adapter = adapter
 
-        val title = view.findViewById<TextView>(R.id.obstacle_title)
-        val x = view.findViewById<TextView>(R.id.x_coordinate)
-        val y = view.findViewById<TextView>(R.id.y_coordinate)
-
-
-        displayObstacle(title, x,y, obstacles)
     }
 
-    private fun displayObstacle(title: TextView, x: TextView,y: TextView,obstacles: List<Obstacle>){
-        obstacles.forEach { data->
-            title.text = data.title
-            x.text = data.x
-            y.text = data.y
+
+    private fun initDummyData() {
+        dummyDataArrayList = arrayListOf<DummyData>()
+
+        title = arrayOf(
+            "Cow",
+            "Dog",
+            "Child",
+            "Vase"
+        )
+
+        x = arrayListOf(12, 41, 21, 23)
+        y = arrayListOf(11, 44, 26, 13)
+
+        for (i in title.indices) {
+            val data = DummyData(title[i], x[i], y[i])
+            dummyDataArrayList.add(data)
         }
     }
 
 
-  /*  fun deleteObstacle(index: Int){
-        obstacleList.removeObstacleAtIndex(index)
-    }
-*/
+
 
     companion object {
         /**
@@ -101,5 +113,7 @@ class ObstaclesFragment : Fragment() {
                 }
             }
     }
+
+
 }
 
