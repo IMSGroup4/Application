@@ -18,5 +18,9 @@
     <string name="obstacles_fragment">Obstacles fragment</string>
     <string name="home_fragment">Home fragment</string>
     <string name="control_fragment">Control fragment</string>
+    <string name="switch_map">Switch Map</string>
+    <string name="switch_to_surroundings">Switch to surroundings</string>
+    <string name="switch_to_mower_path">Switch to mower path</string>
+
 
 </resources>
