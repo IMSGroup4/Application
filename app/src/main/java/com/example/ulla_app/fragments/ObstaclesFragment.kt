@@ -72,7 +72,7 @@ class ObstaclesFragment : Fragment() {
     }
 
 
-    private fun initDummyData() {
+    private fun initDummyData() { // ändra så den anropar ObtsaclePosition
         dummyDataArrayList = arrayListOf<DummyData>()
 
         title = arrayOf(

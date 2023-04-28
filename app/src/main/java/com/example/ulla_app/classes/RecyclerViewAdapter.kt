@@ -10,12 +10,12 @@ import com.example.ulla_app.dataclasses.DummyData
 
 
 class RecyclerViewAdapter(private val dummyData: ArrayList<DummyData>) : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
-
+// ändra från dummy till obstaclePosition.kt
     inner class ViewHolder(viewItem : View): RecyclerView.ViewHolder(viewItem){
         val title: TextView = viewItem.findViewById(R.id.obstacle_title)
         val x: TextView = viewItem.findViewById(R.id.x_coordinate)
         val y: TextView = viewItem.findViewById(R.id.y_coordinate)
-    }
+    } // deklarera variablerna frånObstaclePosition
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewItem = LayoutInflater.from(parent.context).inflate(R.layout.obstacle_item, parent, false)
@@ -24,7 +24,7 @@ class RecyclerViewAdapter(private val dummyData: ArrayList<DummyData>) : Recycle
 
     override fun getItemCount(): Int {
         return dummyData.size
-    }
+    } // inte dummy.
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = dummyData[position]
@@ -32,6 +32,6 @@ class RecyclerViewAdapter(private val dummyData: ArrayList<DummyData>) : Recycle
         holder.x.text = currentItem.x.toString()
         holder.y.text = currentItem.y.toString()
 
-    }
+    } // inistiera värderna
 
 }
