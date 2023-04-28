@@ -10,6 +10,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import org.json.JSONObject
 import java.lang.Integer.min
 
 
@@ -51,6 +52,17 @@ class Joystick @JvmOverloads constructor(
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        fun sendJoystickCoords(x: Float, y: Float) {
+            val timestamp = System.currentTimeMillis()
+            val joystickCoords = JSONObject().apply {
+                put("action", "joystick")
+                put("x", x)
+                put("y", y)
+                put("timestamp", timestamp)
+            }
+            myWebSocket.send(joystickCoords)
+        }
+
         val action = event.action
         if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
             // Update the position of the joystick based on the touch coordinates
@@ -68,6 +80,8 @@ class Joystick @JvmOverloads constructor(
             }
             // Redraw the joystick
             invalidate()
+            // Send the joystick coordinates
+            sendJoystickCoords((hatX - centerX) / baseRadius, (centerY - hatY) / baseRadius)
             return true
         } else if (action == MotionEvent.ACTION_UP) {
             // Reset the position of the joystick to the center
@@ -75,6 +89,8 @@ class Joystick @JvmOverloads constructor(
             hatY = centerY
             // Redraw the joystick
             invalidate()
+            // Send the joystick coordinates
+            sendJoystickCoords(0.0F,0.0F)
             return true
         }
         return super.onTouchEvent(event)
