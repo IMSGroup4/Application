@@ -1,12 +1,15 @@
 package com.example.ulla_app.classes
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.View
+import com.example.ulla_app.R
 
 class MowerPathView(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
     private var showMowerPathView = true
@@ -31,6 +34,8 @@ class MowerPathView(context: Context, attrs: AttributeSet? = null) : View(contex
         style = Paint.Style.FILL
     }
 
+    private val mowerBitmap: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.small_ulla_160x160)
+
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         centerX = w / 2f
@@ -44,10 +49,22 @@ class MowerPathView(context: Context, attrs: AttributeSet? = null) : View(contex
         canvas.translate(centerX, centerY)
 
         if(showMowerPathView){
-            canvas.drawCircle(lastMowerPoint.first, lastMowerPoint.second, 30f, mowerPaint)
+            //canvas.drawCircle(lastMowerPoint.first, lastMowerPoint.second, 30f, mowerPaint)
+            canvas.drawBitmap(
+                mowerBitmap,
+                lastMowerPoint.first - mowerBitmap.width / 2,
+                lastMowerPoint.second - mowerBitmap.height / 2,
+                null
+            )
             canvas.drawPath(mowerPath, mowerPathPaint)
         } else {
-            canvas.drawCircle(0F, 0F, 30f, mowerPaint)
+            //canvas.drawCircle(0F, 0F, 30f, mowerPaint)
+            canvas.drawBitmap(
+                mowerBitmap,
+                -mowerBitmap.width / 2f,
+                -mowerBitmap.height / 2f,
+                null
+            )
             for (point in lidarPoints) {
                 canvas.drawCircle(point.first, point.second, 20f, lidarPointPaint)
             }
