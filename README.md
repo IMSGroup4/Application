@@ -48,3 +48,26 @@ x86 Images
 ```
 
 After selecting the System Image press Next and then Finish. The Image will be donwloaded to you system. After it's completed you can press the `Play button` the mobile emulator will run and you will be able to see the emulator run the code.
+
+
+## Websocket JSON to mower
+
+```
+# when user uses joystick
+ {
+     "action" : "joystick",
+     "x": 0.5,
+     "y": 0.8,
+     "timestamp: 1651234567890
+ }
+```
+
+```
+# when user chooses autonomous
+ {
+     "action" : "autonomous",
+     "x": null,
+     "y": null,
+     "timestamp: 1651234567890
+ }
+```
