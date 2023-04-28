@@ -1,5 +1,6 @@
 package com.example.ulla_app.fragments
 
+import android.content.res.Resources
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.ulla_app.R
 import android.util.Log
+import android.widget.Button
 import androidx.lifecycle.lifecycleScope
 import com.example.ulla_app.classes.MowerPathView
 import com.example.ulla_app.dataclasses.*
@@ -45,6 +47,21 @@ class MapFragment : Fragment() {
                 Log.e(TAG, "Error: ${response.code}")
             }
 
+            val switchMapButton = view.findViewById<Button>(R.id.switch_map_button)
+            switchMapButton?.setOnClickListener {
+                Log.d(TAG, "isMowerPathViewShowing(): ${isMowerPathViewShowing()}")
+                if (isMowerPathViewShowing()){ // i have given up on life :)
+                    switchToSurroundings()
+                    switchMapButton.setText(R.string.switch_to_surroundings)
+
+
+
+                } else {
+                    switchToMowerPath()
+                    switchMapButton.setText(R.string.switch_to_mower_path)
+                }
+            }
+
             val responseBodyStr = response.body?.string()
             Log.d(TAG, "API Response: $responseBodyStr")
 
@@ -54,6 +71,9 @@ class MapFragment : Fragment() {
             for(position in positions){
                 updateMowerPosition(position.x.toFloat(), position.y.toFloat())
             }
+
+            val lastMowerPosition = positions.last()
+            updateMowerPoints(lastMowerPosition.x.toFloat(), lastMowerPosition.y.toFloat())
 
             //dummy data
             addLidarPoint(210F, 100F)
@@ -72,6 +92,22 @@ class MapFragment : Fragment() {
 
     private fun clear() {
         mowerPathView?.clear()
+    }
+
+    private fun updateMowerPoints(x: Float, y: Float) {
+        mowerPathView?.updateMowerPoint(x, y)
+    }
+
+    private fun switchToMowerPath(){
+        mowerPathView?.switchToMowerPath()
+    }
+
+    private fun switchToSurroundings(){
+        mowerPathView?.switchToSurroundings()
+    }
+
+    private fun isMowerPathViewShowing(): Boolean {
+        return mowerPathView!!.getShowMowerPathView()
     }
 
     private suspend fun makeApiCall(url: String): Response {
