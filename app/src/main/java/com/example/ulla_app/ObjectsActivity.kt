@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.ulla_app.classes.ObstacleList
 
 class ObjectsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
