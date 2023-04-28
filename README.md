@@ -52,7 +52,7 @@ After selecting the System Image press Next and then Finish. The Image will be d
 
 ## Websocket JSON to mower
 
-'''
+```
 # when user uses joystick
  {
      "action" : "joystick",
@@ -60,9 +60,9 @@ After selecting the System Image press Next and then Finish. The Image will be d
      "y": 0.8,
      "timestamp: 1651234567890
  }
-'''
+```
 
-'''
+```
 # when user chooses autonomous
  {
      "action" : "autonomous",
@@ -70,4 +70,4 @@ After selecting the System Image press Next and then Finish. The Image will be d
      "y": null,
      "timestamp: 1651234567890
  }
-'''
+```
