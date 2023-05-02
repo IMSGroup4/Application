@@ -12,6 +12,8 @@ import android.view.MotionEvent
 import android.view.View
 import org.json.JSONObject
 import java.lang.Integer.min
+import java.lang.Math.sqrt
+import kotlin.math.*
 
 
 class Joystick @JvmOverloads constructor(
@@ -35,7 +37,7 @@ class Joystick @JvmOverloads constructor(
     private var heightt = getScreenHeight();
 
     private var centerX = (widthh?.div(2))!!.toFloat();
-    private var centerY = (heightt?.div(2))!!.toFloat();
+    private var centerY = (heightt?.div(3))!!.toFloat();
     private var baseRadius = (min(widthh!!, heightt!!) / 3).toFloat();
     private var hatRadius = (min(widthh!!, heightt!!) / 5).toFloat();
 
@@ -52,7 +54,7 @@ class Joystick @JvmOverloads constructor(
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        fun sendJoystickCoords(x: Float, y: Float) {
+        fun sendJoystickCoords(x: Double, y: Double) {
             val timestamp = System.currentTimeMillis()
             val joystickCoords = JSONObject().apply {
                 put("action", "joystick")
@@ -60,6 +62,8 @@ class Joystick @JvmOverloads constructor(
                 put("y", y)
                 put("timestamp", timestamp)
             }
+            Log.d("debug", "x : " + x.toString());
+            Log.d("debug", "y : " + y.toString());
             myWebSocket.send(joystickCoords)
         }
 
@@ -74,14 +78,14 @@ class Joystick @JvmOverloads constructor(
                 hatX = x
                 hatY = y
             } else {
-                val angle = Math.atan2(dy.toDouble(), dx.toDouble())
-                hatX = centerX + (baseRadius * Math.cos(angle)).toFloat()
-                hatY = centerY + (baseRadius * Math.sin(angle)).toFloat()
+                val angle = atan2(dy.toDouble(), dx.toDouble())
+                hatX = centerX + (baseRadius * cos(angle)).toFloat()
+                hatY = centerY + (baseRadius * sin(angle)).toFloat()
             }
             // Redraw the joystick
             invalidate()
             // Send the joystick coordinates
-            sendJoystickCoords((hatX - centerX) / baseRadius, (centerY - hatY) / baseRadius)
+            sendJoystickCoords((((hatX - centerX) / baseRadius) * 100.0).roundToInt() / 100.0, (((centerY - hatY) / baseRadius) * 100.0).roundToInt() / 100.0)
             return true
         } else if (action == MotionEvent.ACTION_UP) {
             // Reset the position of the joystick to the center
@@ -90,7 +94,7 @@ class Joystick @JvmOverloads constructor(
             // Redraw the joystick
             invalidate()
             // Send the joystick coordinates
-            sendJoystickCoords(0.0F,0.0F)
+            sendJoystickCoords(0.0,0.0)
             return true
         }
         return super.onTouchEvent(event)
