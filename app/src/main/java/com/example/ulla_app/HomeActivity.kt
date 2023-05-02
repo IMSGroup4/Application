@@ -60,6 +60,18 @@ class HomeActivity : AppCompatActivity() {
         transaction.commit()
     }
 
+    fun updateConnectionStatus(isConnected: Boolean) {
+        val connectionStatusTextView = findViewById<TextView>(R.id.connectionStatus)
+
+        if (isConnected) {
+            connectionStatusTextView.text = getString(R.string.connected)
+            connectionStatusTextView.setBackgroundResource(R.color.success)
+        } else {
+            connectionStatusTextView.text = getString(R.string.disconnected)
+            connectionStatusTextView.setBackgroundResource(R.color.failure)
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         myWebSocket.disconnect()
