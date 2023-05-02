@@ -30,7 +30,6 @@ class Joystick @JvmOverloads constructor(
         return context.resources.displayMetrics.heightPixels
     }
 
-    //private val myCanvas = Canvas();
     private val colors = Paint();
 
     private var widthh = getScreenWidth();
@@ -62,8 +61,8 @@ class Joystick @JvmOverloads constructor(
                 put("y", y)
                 put("timestamp", timestamp)
             }
-            Log.d("debug", "x : " + x.toString());
-            Log.d("debug", "y : " + y.toString());
+            /*Log.d("debug", "x : " + x.toString());
+            Log.d("debug", "y : " + y.toString());*/
             myWebSocket.send(joystickCoords)
         }
 

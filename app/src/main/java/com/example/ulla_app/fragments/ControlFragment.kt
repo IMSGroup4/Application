@@ -30,23 +30,10 @@ class ControlFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-
-        Log.d("debug", "onCreateView before")
-        var test = inflater.inflate(R.layout.fragment_control, container, false)
-        if (test != null) {
-            Log.d("debug", "not null")
-        }
-        else {
-            Log.d("debug", "null")
-        }
-
         return inflater.inflate(R.layout.fragment_control, container, false)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        Log.d("debug", "onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         val joystickView = view.findViewById<Joystick>(R.id.joystickView)
         view.invalidate()
