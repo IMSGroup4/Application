@@ -21,11 +21,11 @@ class ObstacleList {
         return obstacleList
     }
     fun getObstacleImage(obstacleIndex: Int): Bitmap {
-        val imageBytes = Base64.decode(obstacleList[obstacleIndex].photoStringB64, Base64.DEFAULT)
+        val imageBytes = Base64.decode(obstacleList[obstacleIndex].base64_image, Base64.DEFAULT)
         return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
     }
     fun getObstacleClassification(obstacleIndex : Int) : Pair<String,Float>{
-        return Pair<String, Float>(obstacleList[obstacleIndex].photoInformation.description, obstacleList[obstacleIndex].photoInformation.score)
+        return Pair<String, Float>(obstacleList[obstacleIndex].infos_image.description, obstacleList[obstacleIndex].infos_image.score)
     }
 
 }

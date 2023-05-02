@@ -35,7 +35,7 @@ class RecyclerViewAdapter(private val obstacleList: ObstacleList) : RecyclerView
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val obstacle = obstacleList.getObstacle(position)
-        holder.title.text = obstacle.photoInformation.description
+        holder.title.text = obstacle.infos_image.description
         holder.x.text = obstacle.x.toString()
         holder.y.text = obstacle.y.toString()
         val image = obstacleList.getObstacleImage(position)
