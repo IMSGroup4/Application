@@ -49,9 +49,9 @@ class HomeFragment : Fragment() {
         val connectButton = view.findViewById<Button>(R.id.connect_button)
         val disconnectButton = view.findViewById<Button>(R.id.disconnect_button)
         val output = view.findViewById<TextView>(R.id.output)
-        val timestamp = System.currentTimeMillis()
 
         connectButton?.setOnClickListener {
+            val timestamp = System.currentTimeMillis()
             //TODO: Start loading here
             val connected = myWebSocket.connect()
             //TODO: Stop loading here
@@ -68,10 +68,11 @@ class HomeFragment : Fragment() {
             val disconnected = myWebSocket.disconnect()
         }
 
-        myWebSocket.messageListener { message ->
+        myWebSocket.messageListener { message : String ->
             activity?.runOnUiThread {
                 output.text = message
             }
         }
     }
+
 }
