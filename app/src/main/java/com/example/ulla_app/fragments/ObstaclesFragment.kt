@@ -32,13 +32,14 @@ class ObstaclesFragment : Fragment() {
     private lateinit var adapter: RecyclerViewAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var dummyDataArrayList: ArrayList<DummyData>  //List of objects
+    private val obstacleList = ObstacleList()
 
     lateinit var title: Array<String>
     lateinit var x: ArrayList<Int>
     lateinit var y: ArrayList<Int>
 
 
-    private val obstacleList = ObstacleList()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +67,7 @@ class ObstaclesFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recycle_view)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
-        adapter = RecyclerViewAdapter(dummyDataArrayList)
+        adapter = RecyclerViewAdapter(obstacleList)
         recyclerView.adapter = adapter
 
     }
