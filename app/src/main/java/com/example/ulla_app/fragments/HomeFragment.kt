@@ -52,21 +52,13 @@ class HomeFragment : Fragment() {
         val homeActivity = activity as HomeActivity
 
         connectButton?.setOnClickListener {
-            val timestamp = System.currentTimeMillis()
+
             //TODO: Start loading here
             val connected = myWebSocket.connect()
             //TODO: Stop loading here
 
             // change disconnected textview to connected
             homeActivity.updateConnectionStatus(true)
-
-            //TODO: Implement some way for user to choose autonomous functionality
-            myWebSocket.send(JSONObject().apply {
-                put("action", "autonomous")
-                put("x", null)
-                put("y", null)
-                put("timestamp", timestamp)
-            })
         }
 
         disconnectButton?.setOnClickListener {
