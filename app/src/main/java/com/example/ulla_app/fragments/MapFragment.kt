@@ -26,6 +26,7 @@ class MapFragment : Fragment() {
 
     var mowerPathView: MowerPathView? = null
     val TAG = "MapFragment"
+    private var timer: Timer? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -111,8 +112,14 @@ class MapFragment : Fragment() {
             }
         }
 
-        val timer = Timer()
-        timer.scheduleAtFixedRate(timerTask, 0, 5000)
+        timer = Timer()
+        timer?.scheduleAtFixedRate(timerTask, 0, 5000)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        timer?.cancel()
+        timer = null
     }
 
     private fun updateMowerPosition(x: Float, y: Float) {
