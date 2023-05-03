@@ -24,6 +24,7 @@ object myWebSocket {
     private val client: OkHttpClient = OkHttpClient()
 
     fun connect(): Boolean {
+        disconnect()
         Log.d(TAG, "connect() called")
         val request = Request.Builder()
             .url("wss://ims-group4-backend.azurewebsites.net/ws/app")
