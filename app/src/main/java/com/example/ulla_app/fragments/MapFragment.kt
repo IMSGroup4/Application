@@ -1,6 +1,5 @@
 package com.example.ulla_app.fragments
 
-import android.content.res.Resources
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,6 +19,8 @@ import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import java.util.Timer
+import java.util.TimerTask
 
 class MapFragment : Fragment() {
 
@@ -38,48 +39,80 @@ class MapFragment : Fragment() {
 
         mowerPathView = view?.findViewById<MowerPathView>(R.id.mowerPathView)
 
-        val url = "https://ims-group4-backend.azurewebsites.net/api/positions"
+        val positionsUrl = "https://ims-group4-backend.azurewebsites.net/api/positions"
+        val surroundingsUrl = "https://ims-group4-backend.azurewebsites.net/api/surrounding"
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            val response = makeApiCall(url)
+        val switchMapButton = view.findViewById<Button>(R.id.switch_map_button)
+        switchMapButton?.setOnClickListener {
+            Log.d(TAG, "isMowerPathViewShowing(): ${isMowerPathViewShowing()}")
+            if (isMowerPathViewShowing()){ // i have given up on life :)
+                switchToSurroundings()
+                switchMapButton.setText(R.string.switch_to_surroundings)
 
-            if (!response.isSuccessful) {
-                Log.e(TAG, "Error: ${response.code}")
+
+
+            } else {
+                switchToMowerPath()
+                switchMapButton.setText(R.string.switch_to_mower_path)
             }
+        }
 
-            val switchMapButton = view.findViewById<Button>(R.id.switch_map_button)
-            switchMapButton?.setOnClickListener {
-                Log.d(TAG, "isMowerPathViewShowing(): ${isMowerPathViewShowing()}")
-                if (isMowerPathViewShowing()){ // i have given up on life :)
-                    switchToSurroundings()
-                    switchMapButton.setText(R.string.switch_to_surroundings)
+        val timerTask = object : TimerTask() {
+            override fun run() {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    var responsePositions = makeApiCall(positionsUrl)
+
+                    if (!responsePositions.isSuccessful) {
+                        Log.e(TAG, "Error: ${responsePositions.code}")
+                    }
+
+                    var responseSurroundings = makeApiCall(surroundingsUrl)
+
+                    if (!responseSurroundings.isSuccessful) {
+                        Log.e(TAG, "Error ${responseSurroundings.code}")
+                    }
 
 
+                    var responseBodyPositionsStr = responsePositions.body?.string()
+                    Log.d(TAG, "API Response: $responseBodyPositionsStr")
 
-                } else {
-                    switchToMowerPath()
-                    switchMapButton.setText(R.string.switch_to_mower_path)
+                    var positions: List<Coordinate> = Json.decodeFromString(
+                        ListSerializer(Coordinate.serializer()),
+                        responseBodyPositionsStr ?: "[]"
+                    )
+                    Log.d(TAG, "positions: $positions")
+
+                    var lastMowerPosition = positions.last()
+
+
+                    var responseBodySurroundingsStr = responseSurroundings.body?.string()
+                    Log.d(TAG, "API Response: $responseBodySurroundingsStr")
+
+                    var surroundings: List<Coordinate> = Json.decodeFromString(
+                        ListSerializer(Coordinate.serializer()),
+                        responseBodySurroundingsStr ?: "[]"
+                    )
+                    Log.d(TAG, "surroundings: $surroundings")
+
+
+                    clear()
+
+                    for (position in positions) {
+                        updateMowerPosition(position.x.toFloat(), position.y.toFloat())
+                    }
+
+                    updateMowerPoint(lastMowerPosition.x.toFloat(), lastMowerPosition.y.toFloat())
+
+                    for (surrounding in surroundings) {
+                        addLidarPoint(surrounding.x.toFloat(), surrounding.y.toFloat())
+                    }
+
                 }
             }
-
-            val responseBodyStr = response.body?.string()
-            Log.d(TAG, "API Response: $responseBodyStr")
-
-            val positions: List<Position> = Json.decodeFromString(ListSerializer(Position.serializer()), responseBodyStr ?: "[]")
-            Log.d(TAG, "positions: $positions")
-
-            for(position in positions){
-                updateMowerPosition(position.x.toFloat(), position.y.toFloat())
-            }
-
-            val lastMowerPosition = positions.last()
-            updateMowerPoints(lastMowerPosition.x.toFloat(), lastMowerPosition.y.toFloat())
-
-            //dummy data
-            addLidarPoint(210F, 100F)
-            addLidarPoint(240F, 130F)
-            addLidarPoint(260F, 150F)
         }
+
+        val timer = Timer()
+        timer.scheduleAtFixedRate(timerTask, 0, 5000)
     }
 
     private fun updateMowerPosition(x: Float, y: Float) {
@@ -94,7 +127,7 @@ class MapFragment : Fragment() {
         mowerPathView?.clear()
     }
 
-    private fun updateMowerPoints(x: Float, y: Float) {
+    private fun updateMowerPoint(x: Float, y: Float) {
         mowerPathView?.updateMowerPoint(x, y)
     }
 
