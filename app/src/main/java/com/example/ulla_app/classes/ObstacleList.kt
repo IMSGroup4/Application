@@ -27,5 +27,7 @@ class ObstacleList {
     fun getObstacleClassification(obstacleIndex : Int) : Pair<String,Float>{
         return Pair<String, Float>(obstacleList[obstacleIndex].infos_image.description, obstacleList[obstacleIndex].infos_image.score)
     }
+    val size: Int
+        get() = obstacleList.size
 
 }
