@@ -25,10 +25,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:letterSpacing="0.4"
-                android:text="@string/ims"
+                android:letterSpacing="0.35"
+                android:text="@string/ulla"
                 android:textColor="@color/textColor"
-                android:textSize="36sp"
+                android:textSize="34sp"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteY="16dp" />
