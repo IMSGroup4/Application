@@ -21,6 +21,7 @@
     <string name="switch_map">Switch Map</string>
     <string name="switch_to_surroundings">Switch to surroundings</string>
     <string name="switch_to_mower_path">Switch to mower path</string>
+    <string name="status">Status:</string>
 
     <string name="large_text">
         "Material is the metaphor.\n\n"

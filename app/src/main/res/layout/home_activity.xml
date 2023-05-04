@@ -53,17 +53,19 @@
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="@+id/IMS"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/IMS">
+                app:layout_constraintTop_toTopOf="@+id/IMS"
+                android:layout_marginTop="16sp">
 
                 <TextView
-
                     android:id="@+id/connectionStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="20sp"
                     android:background="@color/failure"
-                    android:padding="5sp"
-                    android:text="@string/disconnected" />
+                    android:padding="12sp"
+                    android:text="@string/disconnected"
+                    android:textColor="@color/textColor"
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -89,38 +91,42 @@
             android:backgroundTint="@color/main_color"
             android:drawableTop="@drawable/home"
             android:padding="20sp"
-            android:text="@string/home" />
+            android:text="@string/home"
+            android:textSize="12sp"/>
 
 
         <Button
             android:id="@+id/map_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:backgroundTint="@color/main_color"
             android:drawableTop="@drawable/map"
             android:padding="20sp"
-            android:text="@string/map" />
+            android:text="@string/map"
+            android:textSize="12sp"/>
 
         <Button
             android:id="@+id/control_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:backgroundTint="@color/main_color"
             android:drawableTop="@drawable/controller"
             android:padding="20sp"
-            android:text="@string/control" />
+            android:text="@string/control"
+            android:textSize="12sp"/>
 
         <Button
             android:id="@+id/obstacles_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:backgroundTint="@color/main_color"
             android:drawableTop="@drawable/object"
             android:padding="20sp"
-            android:text="@string/obstacles" />
+            android:text="@string/obstacles"
+            android:textSize="12sp"/>
 
     </LinearLayout>
 

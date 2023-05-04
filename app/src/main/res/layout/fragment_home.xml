@@ -32,7 +32,8 @@
         app:layout_constraintBottom_toTopOf="@id/disconnect_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:layout_marginBottom="16sp"/>
 
     <Button
         android:id="@+id/disconnect_button"
@@ -40,10 +41,12 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/main_color"
         android:padding="15sp"
+        android:visibility="gone"
         android:text="@string/disconnect_ulla"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:layout_marginBottom="16sp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

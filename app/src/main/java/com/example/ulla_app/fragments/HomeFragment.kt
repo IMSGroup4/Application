@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
 import com.example.ulla_app.HomeActivity
 import com.example.ulla_app.R
 import com.example.ulla_app.classes.*
@@ -55,6 +56,10 @@ class HomeFragment : Fragment() {
 
             //TODO: Start loading here
             val connected = myWebSocket.connect()
+            if(connected){
+                connectButton.visibility = View.GONE
+                disconnectButton.visibility = View.VISIBLE
+            }
             //TODO: Stop loading here
 
             // change disconnected textview to connected
@@ -63,6 +68,11 @@ class HomeFragment : Fragment() {
 
         disconnectButton?.setOnClickListener {
             val disconnected = myWebSocket.disconnect()
+
+            if(disconnected){
+                connectButton.visibility = View.VISIBLE
+                disconnectButton.visibility = View.GONE
+            }
             // change connected textview to disconnected
             homeActivity.updateConnectionStatus(false)
         }
