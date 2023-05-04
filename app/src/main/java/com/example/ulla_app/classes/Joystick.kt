@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import com.example.ulla_app.R
 import org.json.JSONObject
 import java.lang.Integer.min
+import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.roundToInt
@@ -105,6 +106,9 @@ class Joystick @JvmOverloads constructor(
         private var hatX = centerX
         private var hatY = centerY
 
+        private var lastX = 0.0
+        private var lastY = 0.0
+
         override fun onDraw(canvas: Canvas) {
             super.onDraw(canvas)
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
@@ -115,17 +119,24 @@ class Joystick @JvmOverloads constructor(
         }
 
         override fun onTouchEvent(event: MotionEvent): Boolean {
+
             fun sendJoystickCoords(x: Double, y: Double) {
                 val timestamp = System.currentTimeMillis()
-                val joystickCoords = JSONObject().apply {
-                    put("action", "joystick")
-                    put("x", x)
-                    put("y", y)
-                    put("timestamp", timestamp)
+
+                // only send joystick coordinates if there is a difference of greater than 0.2 for either x or y
+                if (abs(x - lastX) > 0.2 || abs(y - lastY) > 0.2) {
+                    lastX = x
+                    lastY = y
+
+                    val joystickCoords = JSONObject().apply {
+                        put("action", "joystick")
+                        put("x", lastX)
+                        put("y", lastY)
+                        put("timestamp", timestamp)
+                    }
+
+                    myWebSocket.send(joystickCoords)
                 }
-                /*Log.d("debug", "x : " + x.toString());
-                Log.d("debug", "y : " + y.toString());*/
-                myWebSocket.send(joystickCoords)
             }
 
             val action = event.action
