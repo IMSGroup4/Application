@@ -11,6 +11,7 @@ import okhttp3.*
 import okio.ByteString
 import okio.ByteString.Companion.decodeHex
 import androidx.fragment.app.Fragment
+import com.example.ulla_app.classes.myWebSocket
 import com.example.ulla_app.fragments.*
 
 
@@ -57,5 +58,22 @@ class HomeActivity : AppCompatActivity() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, fragment)
         transaction.commit()
+    }
+
+    fun updateConnectionStatus(isConnected: Boolean) {
+        val connectionStatusTextView = findViewById<TextView>(R.id.connectionStatus)
+
+        if (isConnected) {
+            connectionStatusTextView.text = getString(R.string.connected)
+            connectionStatusTextView.setBackgroundResource(R.color.success)
+        } else {
+            connectionStatusTextView.text = getString(R.string.disconnected)
+            connectionStatusTextView.setBackgroundResource(R.color.failure)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        myWebSocket.disconnect()
     }
 }

@@ -9,9 +9,13 @@ import okhttp3.WebSocket
 import org.json.JSONObject
 import org.json.JSONStringer
 
-val myWebSocket = MyWebSocket()
+// changed MyWebSocket global class to myWebSocket global Object as
+// websocket connection is required in multiple fragments
+// TODO - maybe create another objects folder to move this file within
 
-class MyWebSocket {
+// val myWebSocket = MyWebSocket()
+
+object myWebSocket {
 
     private val TAG = "MyWebSocket"
 
@@ -20,6 +24,7 @@ class MyWebSocket {
     private val client: OkHttpClient = OkHttpClient()
 
     fun connect(): Boolean {
+        disconnect()
         Log.d(TAG, "connect() called")
         val request = Request.Builder()
             .url("wss://ims-group4-backend.azurewebsites.net/ws/app")

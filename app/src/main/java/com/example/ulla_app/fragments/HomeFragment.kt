@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
 import com.example.ulla_app.HomeActivity
 import com.example.ulla_app.R
 import com.example.ulla_app.classes.*
@@ -49,24 +50,38 @@ class HomeFragment : Fragment() {
         val connectButton = view.findViewById<Button>(R.id.connect_button)
         val disconnectButton = view.findViewById<Button>(R.id.disconnect_button)
         val output = view.findViewById<TextView>(R.id.output)
+        val homeActivity = activity as HomeActivity
 
         connectButton?.setOnClickListener {
+
             //TODO: Start loading here
             val connected = myWebSocket.connect()
-            // TODO: Stop loading here
-            myWebSocket.send(JSONObject().apply {
-                put("action", "move")
-            })
+            if(connected){
+                connectButton.visibility = View.GONE
+                disconnectButton.visibility = View.VISIBLE
+            }
+            //TODO: Stop loading here
+
+            // change disconnected textview to connected
+            homeActivity.updateConnectionStatus(true)
         }
 
         disconnectButton?.setOnClickListener {
             val disconnected = myWebSocket.disconnect()
+
+            if(disconnected){
+                connectButton.visibility = View.VISIBLE
+                disconnectButton.visibility = View.GONE
+            }
+            // change connected textview to disconnected
+            homeActivity.updateConnectionStatus(false)
         }
 
-        myWebSocket.messageListener { message ->
+        myWebSocket.messageListener { message : String ->
             activity?.runOnUiThread {
                 output.text = message
             }
         }
     }
+
 }
