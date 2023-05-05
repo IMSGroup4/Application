@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10sp"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/obstacle_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10sp"
+            android:layout_marginTop="10sp"
+            android:background="@color/textColor">
+
+            <ImageView
+                android:id="@+id/obstacle_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/image" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/obstacle_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TITLE"
+                    android:textSize="24sp"
+                    android:gravity="center"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15sp"
+                    >
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Coordination:"
+                        android:layout_weight="1"
+                        />
+
+                    <TextView
+                        android:id="@+id/x_coordinate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="X"
+                        android:gravity="center"
+                        />
+                    <TextView
+                        android:id="@+id/y_coordinate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Y"
+                        android:gravity="center"
+
+                        />
+                </LinearLayout>
+                <Button
+                    android:id="@+id/delete_btn"
+                    android:layout_width="100sp"
+                    android:layout_height="50sp"
+                    android:backgroundTint="@color/failure"
+                    android:text="@string/delete"
+                    android:textSize="12sp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="43sp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

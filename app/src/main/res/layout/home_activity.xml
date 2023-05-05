@@ -7,7 +7,7 @@
     android:background="@color/bg">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/top_banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/main_color"
@@ -25,10 +25,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:letterSpacing="0.4"
-                android:text="@string/ims"
+                android:letterSpacing="0.35"
+                android:text="@string/ulla"
                 android:textColor="@color/textColor"
-                android:textSize="36sp"
+                android:textSize="34sp"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteY="16dp" />
@@ -53,17 +53,19 @@
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="@+id/IMS"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/IMS">
+                app:layout_constraintTop_toTopOf="@+id/IMS"
+                android:layout_marginTop="16sp">
 
                 <TextView
-
                     android:id="@+id/connectionStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="20sp"
                     android:background="@color/failure"
-                    android:padding="5sp"
-                    android:text="@string/disconnected" />
+                    android:padding="12sp"
+                    android:text="@string/disconnected"
+                    android:textColor="@color/textColor"
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -74,7 +76,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/navigation_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/main_color"
@@ -82,72 +84,58 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
-            android:id="@+id/homeButton"
+            android:id="@+id/home_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/main_color"
             android:drawableTop="@drawable/home"
             android:padding="20sp"
-            android:text="@string/home" />
+            android:text="@string/home"
+            android:textSize="12sp"/>
 
 
         <Button
-            android:id="@+id/mapButton"
+            android:id="@+id/map_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:backgroundTint="@color/main_color"
             android:drawableTop="@drawable/map"
             android:padding="20sp"
-            android:text="@string/map" />
+            android:text="@string/map"
+            android:textSize="12sp"/>
 
         <Button
-            android:id="@+id/controlButton"
+            android:id="@+id/control_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:backgroundTint="@color/main_color"
             android:drawableTop="@drawable/controller"
             android:padding="20sp"
-            android:text="@string/control" />
+            android:text="@string/control"
+            android:textSize="12sp"/>
 
         <Button
-            android:id="@+id/objectsButton"
+            android:id="@+id/obstacles_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:backgroundTint="@color/main_color"
             android:drawableTop="@drawable/object"
             android:padding="20sp"
-            android:text="@string/object" />
+            android:text="@string/obstacles"
+            android:textSize="12sp"/>
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/main_color"
-        android:padding="15sp"
-        android:text="@string/connect_ulla"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="60sp"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/output"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.253" />
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/navigation_bar"
+        app:layout_constraintTop_toBottomOf="@id/top_banner"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
