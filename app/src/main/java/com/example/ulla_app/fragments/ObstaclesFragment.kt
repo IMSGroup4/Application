@@ -1,17 +1,29 @@
 package com.example.ulla_app.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ulla_app.R
 import com.example.ulla_app.classes.ObstacleList
 import com.example.ulla_app.classes.RecyclerViewAdapter
+import com.example.ulla_app.dataclasses.Coordinate
 import com.example.ulla_app.dataclasses.DummyData
+import com.example.ulla_app.dataclasses.ObstaclePosition
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.json.Json
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 
 class ObstaclesFragment : Fragment() {
     private lateinit var deleteBtn: FloatingActionButton
@@ -19,6 +31,7 @@ class ObstaclesFragment : Fragment() {
     private lateinit var adapter: RecyclerViewAdapter
     private lateinit var recyclerView: RecyclerView
     private val obstacleList = ObstacleList()
+    private val TAG = "ObstaclesFragment"
 
     lateinit var title: Array<String>
     lateinit var x: ArrayList<Int>
@@ -39,7 +52,7 @@ class ObstaclesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initObstacleList()
+
         val layoutManager = LinearLayoutManager(context)
         recyclerView = view.findViewById(R.id.recycle_view)
         recyclerView.layoutManager = layoutManager
@@ -47,11 +60,39 @@ class ObstaclesFragment : Fragment() {
         adapter = RecyclerViewAdapter(obstacleList)
         recyclerView.adapter = adapter
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            initObstacleList()
+        }
+
     }
 
 
-    private fun initObstacleList() {
+    private suspend fun initObstacleList() {
+        val obstacleUrl = "https://ims-group4-backend.azurewebsites.net/api/obstacles/"
 
+        var responeObstacles = getObstaclesFromApi(obstacleUrl)
+        var responseObstacleBodyStr = responeObstacles.body?.string()
+        Log.d(TAG, "API Response: $responseObstacleBodyStr")
+
+        var obstacles: List<ObstaclePosition> = Json.decodeFromString(
+            ListSerializer(ObstaclePosition.serializer()),
+            responseObstacleBodyStr ?: "[]"
+        )
+        Log.d(TAG, "obstacles: $obstacles")
+
+        adapter.notifyDataSetChanged()
+    }
+
+    private suspend fun getObstaclesFromApi(url: String): Response {
+        val client = OkHttpClient()
+
+        val request = Request.Builder()
+            .url(url)
+            .build()
+
+        return withContext(Dispatchers.IO) {
+            client.newCall(request).execute()
+        }
     }
 
 }
