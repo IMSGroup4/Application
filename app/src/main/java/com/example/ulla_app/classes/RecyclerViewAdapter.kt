@@ -1,20 +1,30 @@
 package com.example.ulla_app.classes
 
+import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ulla_app.R
 import com.example.ulla_app.dataclasses.DummyData
+import com.example.ulla_app.dataclasses.ObstaclePosition
+import com.example.ulla_app.dataclasses.PhotoInformation
+import com.google.android.material.imageview.ShapeableImageView
+import kotlinx.coroutines.CoroutineStart
+import kotlin.io.encoding.Base64
 
-
-class RecyclerViewAdapter(private val dummyData: ArrayList<DummyData>) : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
-// ändra från dummy till obstaclePosition.kt
+//val obstacleList : ObstacleList()
+class RecyclerViewAdapter(private val obstacleList: ObstacleList) : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
+    val TAG = "RecyclerViewAdapter"
     inner class ViewHolder(viewItem : View): RecyclerView.ViewHolder(viewItem){
         val title: TextView = viewItem.findViewById(R.id.obstacle_title)
         val x: TextView = viewItem.findViewById(R.id.x_coordinate)
         val y: TextView = viewItem.findViewById(R.id.y_coordinate)
+        val image: ImageView = viewItem.findViewById(R.id.obstacle_image)
+
     } // deklarera variablerna frånObstaclePosition
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,15 +33,20 @@ class RecyclerViewAdapter(private val dummyData: ArrayList<DummyData>) : Recycle
     }
 
     override fun getItemCount(): Int {
-        return dummyData.size
-    } // inte dummy.
+        return obstacleList.size
+    }
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = dummyData[position]
-        holder.title.text = currentItem.title
-        holder.x.text = currentItem.x.toString()
-        holder.y.text = currentItem.y.toString()
+        val obstacle = obstacleList.getObstacle(position)
+        holder.title.text = obstacle.infos_image[0].description + ", " + obstacle.infos_image[1].description + ", " + obstacle.infos_image[2].description
+        holder.x.text = obstacle.x.toString()
+        holder.y.text = obstacle.y.toString()
+        val image = obstacleList.getObstacleImage(position)
+        holder.image.setImageBitmap(image)
+        Log.d(TAG, obstacle.toString())
 
-    } // inistiera värderna
+
+    }
 
 }
