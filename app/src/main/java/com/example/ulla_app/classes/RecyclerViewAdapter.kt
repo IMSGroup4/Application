@@ -23,6 +23,7 @@ class RecyclerViewAdapter(private val obstacleList: ObstacleList) : RecyclerView
         val title: TextView = viewItem.findViewById(R.id.obstacle_title)
         val x: TextView = viewItem.findViewById(R.id.x_coordinate)
         val y: TextView = viewItem.findViewById(R.id.y_coordinate)
+        val image: ImageView = viewItem.findViewById(R.id.obstacle_image)
 
     } // deklarera variablerna frånObstaclePosition
 
@@ -38,10 +39,11 @@ class RecyclerViewAdapter(private val obstacleList: ObstacleList) : RecyclerView
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val obstacle = obstacleList.getObstacle(position)
-        holder.title.text = obstacle.infos_image[0].description
+        holder.title.text = obstacle.infos_image[0].description + ", " + obstacle.infos_image[1].description + ", " + obstacle.infos_image[2].description
         holder.x.text = obstacle.x.toString()
         holder.y.text = obstacle.y.toString()
         val image = obstacleList.getObstacleImage(position)
+        holder.image.setImageBitmap(image)
         Log.d(TAG, obstacle.toString())
 
 

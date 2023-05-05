@@ -22,8 +22,8 @@
 
             <ImageView
                 android:id="@+id/obstacle_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="300px"
+                android:layout_height="300px"
                 app:srcCompat="@drawable/image" />
 
             <LinearLayout
@@ -39,6 +39,7 @@
                     android:textSize="24sp"
                     android:gravity="center"
                     />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -49,7 +50,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Coordination:"
+                        android:text="Coordinates:"
                         android:layout_weight="1"
                         />
 
@@ -71,16 +72,6 @@
 
                         />
                 </LinearLayout>
-                <Button
-                    android:id="@+id/delete_btn"
-                    android:layout_width="100sp"
-                    android:layout_height="50sp"
-                    android:backgroundTint="@color/failure"
-                    android:text="@string/delete"
-                    android:textSize="12sp"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="43sp"
-                    />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

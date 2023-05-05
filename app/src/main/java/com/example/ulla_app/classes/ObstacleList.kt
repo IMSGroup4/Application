@@ -9,14 +9,6 @@ import kotlinx.coroutines.launch
 
 class ObstacleList {
     private var obstacleList = listOf<ObstaclePosition>()
-/*
-    fun addObstacle(obstacle: ObstaclePosition){
-        obstacleList.add(obstacle)
-    }
-    fun removeObstacleAtIndex(index: Int){
-        obstacleList.removeAt(index)
-    }
-    */
 
     fun getObstacle(index: Int): ObstaclePosition{
         return obstacleList[index]

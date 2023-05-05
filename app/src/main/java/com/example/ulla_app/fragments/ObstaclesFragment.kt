@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ulla_app.R
 import com.example.ulla_app.classes.ObstacleList
 import com.example.ulla_app.classes.RecyclerViewAdapter
-import com.example.ulla_app.dataclasses.Coordinate
-import com.example.ulla_app.dataclasses.DummyData
 import com.example.ulla_app.dataclasses.ObstaclePosition
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
@@ -56,7 +54,7 @@ class ObstaclesFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context)
         recyclerView = view.findViewById(R.id.recycle_view)
         recyclerView.layoutManager = layoutManager
-        recyclerView.setHasFixedSize(true)
+        recyclerView.setHasFixedSize(false)
         adapter = RecyclerViewAdapter(obstacleList)
         recyclerView.adapter = adapter
 
@@ -70,8 +68,8 @@ class ObstaclesFragment : Fragment() {
     private suspend fun initObstacleList() {
         val obstacleUrl = "https://ims-group4-backend.azurewebsites.net/api/obstacles/"
 
-        var responeObstacles = getObstaclesFromApi(obstacleUrl)
-        var responseObstacleBodyStr = responeObstacles.body?.string()
+        var responseObstacles = getObstaclesFromApi(obstacleUrl)
+        var responseObstacleBodyStr = responseObstacles.body?.string()
         Log.d(TAG, "API Response: $responseObstacleBodyStr")
 
         var obstacles: List<ObstaclePosition> = Json.decodeFromString(
@@ -79,6 +77,8 @@ class ObstaclesFragment : Fragment() {
             responseObstacleBodyStr ?: "[]"
         )
         Log.d(TAG, "obstacles: $obstacles")
+
+        obstacleList.populateObstacleList(obstacles)
 
         adapter.notifyDataSetChanged()
     }
