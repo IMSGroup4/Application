@@ -12,4 +12,4 @@ data class ObstaclePosition(val x : Int ,
                             val y : Int,
                             val timestamp : Int,
                             val base64_image : String,
-                            val infos_image : PhotoInformation)
+                            val infos_image : List<PhotoInformation>)

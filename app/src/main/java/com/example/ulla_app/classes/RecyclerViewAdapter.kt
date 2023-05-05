@@ -1,6 +1,7 @@
 package com.example.ulla_app.classes
 
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,17 +11,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ulla_app.R
 import com.example.ulla_app.dataclasses.DummyData
 import com.example.ulla_app.dataclasses.ObstaclePosition
+import com.example.ulla_app.dataclasses.PhotoInformation
 import com.google.android.material.imageview.ShapeableImageView
 import kotlinx.coroutines.CoroutineStart
 import kotlin.io.encoding.Base64
 
 //val obstacleList : ObstacleList()
 class RecyclerViewAdapter(private val obstacleList: ObstacleList) : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
+    val TAG = "RecyclerViewAdapter"
     inner class ViewHolder(viewItem : View): RecyclerView.ViewHolder(viewItem){
         val title: TextView = viewItem.findViewById(R.id.obstacle_title)
         val x: TextView = viewItem.findViewById(R.id.x_coordinate)
         val y: TextView = viewItem.findViewById(R.id.y_coordinate)
-
 
     } // deklarera variablerna frånObstaclePosition
 
@@ -36,10 +38,11 @@ class RecyclerViewAdapter(private val obstacleList: ObstacleList) : RecyclerView
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val obstacle = obstacleList.getObstacle(position)
-        holder.title.text = obstacle.infos_image.description
+        holder.title.text = obstacle.infos_image[0].description
         holder.x.text = obstacle.x.toString()
         holder.y.text = obstacle.y.toString()
         val image = obstacleList.getObstacleImage(position)
+        Log.d(TAG, obstacle.toString())
 
 
     }
