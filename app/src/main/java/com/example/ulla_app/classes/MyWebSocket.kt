@@ -27,7 +27,7 @@ object myWebSocket {
         disconnect()
         Log.d(TAG, "connect() called")
         val request = Request.Builder()
-            .url("wss://ims-group4-backend.azurewebsites.net/ws/app")
+            .url("wss://ims-group-4-backend-david.azurewebsites.net/ws/app")
             .build()
 
         ws = client.newWebSocket(request, wsListener)

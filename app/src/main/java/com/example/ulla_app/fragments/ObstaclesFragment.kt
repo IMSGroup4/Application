@@ -66,7 +66,7 @@ class ObstaclesFragment : Fragment() {
 
 
     private suspend fun initObstacleList() {
-        val obstacleUrl = "https://ims-group4-backend.azurewebsites.net/api/obstacles/"
+        val obstacleUrl = "https://ims-group-4-backend-david.azurewebsites.net/api/obstacles/"
 
         var responseObstacles = getObstaclesFromApi(obstacleUrl)
         var responseObstacleBodyStr = responseObstacles.body?.string()

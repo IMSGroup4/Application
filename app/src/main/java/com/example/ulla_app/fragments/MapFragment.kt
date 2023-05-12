@@ -40,8 +40,8 @@ class MapFragment : Fragment() {
 
         mowerPathView = view?.findViewById<MowerPathView>(R.id.mowerPathView)
 
-        val positionsUrl = "https://ims-group4-backend.azurewebsites.net/api/positions"
-        val surroundingsUrl = "https://ims-group4-backend.azurewebsites.net/api/surrounding"
+        val positionsUrl = "https://ims-group-4-backend-david.azurewebsites.net/api/positions"
+        val surroundingsUrl = "https://ims-group-4-backend-david.azurewebsites.net/api/surrounding"
 
         val switchMapButton = view.findViewById<Button>(R.id.switch_map_button)
         switchMapButton?.setOnClickListener {
