@@ -8,37 +8,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10sp"
+        android:padding="5sp"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:id="@+id/obstacle_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="10sp"
             android:layout_marginTop="10sp"
             android:background="@color/textColor">
+            <TextView
+                android:id="@+id/obstacle_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TITLE"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:gravity="start"
+                />
 
-            <ImageView
-                android:id="@+id/obstacle_image"
-                android:layout_width="300px"
-                android:layout_height="300px"
-                app:srcCompat="@drawable/image" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/obstacle_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TITLE"
-                    android:textSize="24sp"
-                    android:gravity="center"
-                    />
+                <ImageView
+                    android:id="@+id/obstacle_image"
+                    android:layout_marginTop="5sp"
+                    android:layout_width="300sp"
+                    android:layout_height="200sp"
+                    app:srcCompat="@drawable/image"
+                    android:layout_gravity="center"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -51,17 +54,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Coordinates:"
-                        android:layout_marginLeft="45sp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.9"
                         />
 
                     <TextView
                         android:id="@+id/x_coordinate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.5"
+                        android:layout_weight="2"
                         android:text="X"
-                        android:gravity="center"
+                        android:gravity="start"
                         />
                     <TextView
                         android:id="@+id/y_coordinate"
@@ -69,7 +71,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.5"
                         android:text="Y"
-                        android:gravity="center"
+                        android:gravity="start"
 
                         />
                 </LinearLayout>
