@@ -15,6 +15,8 @@ import org.json.JSONStringer
 
 // val myWebSocket = MyWebSocket()
 
+var WS_IS_CONNECTED = false
+
 object myWebSocket {
 
     private val TAG = "MyWebSocket"
@@ -31,7 +33,7 @@ object myWebSocket {
             .build()
 
         ws = client.newWebSocket(request, wsListener)
-
+        WS_IS_CONNECTED = true
         return ws != null
     }
 
@@ -41,6 +43,7 @@ object myWebSocket {
             val reason = "App disconnected manually"
             ws!!.close(statusCode, reason)
             Log.d(TAG, "disconnect() called")
+            WS_IS_CONNECTED = false
             return true
         } else {
             return false

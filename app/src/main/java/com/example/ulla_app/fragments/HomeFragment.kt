@@ -40,8 +40,15 @@ class HomeFragment : Fragment() {
 
         val connectButton = view.findViewById<Button>(R.id.connect_button)
         val disconnectButton = view.findViewById<Button>(R.id.disconnect_button)
-        val output = view.findViewById<TextView>(R.id.output)
         val homeActivity = activity as HomeActivity
+
+        if(WS_IS_CONNECTED){
+            connectButton.visibility = View.GONE
+            disconnectButton.visibility = View.VISIBLE
+        } else {
+            connectButton.visibility = View.VISIBLE
+            disconnectButton.visibility = View.GONE
+        }
 
         connectButton?.setOnClickListener {
 
@@ -54,7 +61,7 @@ class HomeFragment : Fragment() {
             //TODO: Stop loading here
 
             // change disconnected textview to connected
-            homeActivity.updateConnectionStatus(true)
+            homeActivity.updateConnectionStatus()
         }
 
         disconnectButton?.setOnClickListener {
@@ -65,14 +72,9 @@ class HomeFragment : Fragment() {
                 disconnectButton.visibility = View.GONE
             }
             // change connected textview to disconnected
-            homeActivity.updateConnectionStatus(false)
+            homeActivity.updateConnectionStatus()
         }
 
-        myWebSocket.messageListener { message : String ->
-            activity?.runOnUiThread {
-                output.text = message
-            }
-        }
     }
 
 }
