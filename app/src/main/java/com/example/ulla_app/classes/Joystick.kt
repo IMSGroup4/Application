@@ -56,7 +56,7 @@ class Joystick @JvmOverloads constructor(
         // Set the initial state of the switch to Joystick mode
         switchView.text = "  Joystick"
         switchView.setTextColor(Color.WHITE)
-        switchView.setBackgroundColor(Color.BLACK)
+        switchView.setBackgroundColor(Color.rgb(0,31,92))
         switchView.isChecked = false
 
         // Set an OnCheckedChangeListener to switch between autonomous and joystick mode
@@ -77,7 +77,7 @@ class Joystick @JvmOverloads constructor(
             } else {
                 switchView.text = "  Joystick"
                 switchView.setTextColor(Color.WHITE)
-                switchView.setBackgroundColor(Color.BLACK)
+                switchView.setBackgroundColor(Color.rgb(0,31,92))
                 joystickView.visibility = View.VISIBLE
                 // Send a message to the server to switch to joystick mode
                 val timestamp = System.currentTimeMillis()
@@ -108,13 +108,12 @@ class Joystick @JvmOverloads constructor(
 
         private var lastX = 0.0
         private var lastY = 0.0
-
         override fun onDraw(canvas: Canvas) {
             super.onDraw(canvas)
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
             colors.setARGB(255, 50, 50, 50)
             canvas.drawCircle(centerX!!, centerY!!, baseRadius!!, colors)
-            colors.setARGB(255, 0, 0, 255)
+            colors.setARGB(255, 0, 31, 92)
             canvas.drawCircle(hatX, hatY, hatRadius, colors)
         }
 

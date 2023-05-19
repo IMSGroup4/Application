@@ -11,26 +11,17 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
+import androidx.lifecycle.lifecycleScope
 import com.example.ulla_app.HomeActivity
 import com.example.ulla_app.R
 import com.example.ulla_app.classes.*
+import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.WebSocket
 import org.json.JSONObject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +40,15 @@ class HomeFragment : Fragment() {
 
         val connectButton = view.findViewById<Button>(R.id.connect_button)
         val disconnectButton = view.findViewById<Button>(R.id.disconnect_button)
-        val output = view.findViewById<TextView>(R.id.output)
         val homeActivity = activity as HomeActivity
+
+        if(WS_IS_CONNECTED){
+            connectButton.visibility = View.GONE
+            disconnectButton.visibility = View.VISIBLE
+        } else {
+            connectButton.visibility = View.VISIBLE
+            disconnectButton.visibility = View.GONE
+        }
 
         connectButton?.setOnClickListener {
 
@@ -63,7 +61,7 @@ class HomeFragment : Fragment() {
             //TODO: Stop loading here
 
             // change disconnected textview to connected
-            homeActivity.updateConnectionStatus(true)
+            homeActivity.updateConnectionStatus()
         }
 
         disconnectButton?.setOnClickListener {
@@ -74,14 +72,9 @@ class HomeFragment : Fragment() {
                 disconnectButton.visibility = View.GONE
             }
             // change connected textview to disconnected
-            homeActivity.updateConnectionStatus(false)
+            homeActivity.updateConnectionStatus()
         }
 
-        myWebSocket.messageListener { message : String ->
-            activity?.runOnUiThread {
-                output.text = message
-            }
-        }
     }
 
 }

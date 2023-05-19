@@ -1,53 +1,42 @@
 package com.example.ulla_app.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ulla_app.R
 import com.example.ulla_app.classes.ObstacleList
 import com.example.ulla_app.classes.RecyclerViewAdapter
-import com.example.ulla_app.dataclasses.DummyData
+import com.example.ulla_app.dataclasses.ObstaclePosition
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.json.Json
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ObstaclesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ObstaclesFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private lateinit var deleteBtn: FloatingActionButton
-    private var param1: String? = null
-    private var param2: String? = null
 
     private lateinit var adapter: RecyclerViewAdapter
     private lateinit var recyclerView: RecyclerView
-    private lateinit var dummyDataArrayList: ArrayList<DummyData>  //List of objects
+    private val obstacleList = ObstacleList()
+    private val TAG = "ObstaclesFragment"
 
     lateinit var title: Array<String>
     lateinit var x: ArrayList<Int>
     lateinit var y: ArrayList<Int>
 
-
-    private val obstacleList = ObstacleList()
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -61,59 +50,50 @@ class ObstaclesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initDummyData()
+
         val layoutManager = LinearLayoutManager(context)
         recyclerView = view.findViewById(R.id.recycle_view)
         recyclerView.layoutManager = layoutManager
-        recyclerView.setHasFixedSize(true)
-        adapter = RecyclerViewAdapter(dummyDataArrayList)
+        recyclerView.setHasFixedSize(false)
+        adapter = RecyclerViewAdapter(obstacleList)
         recyclerView.adapter = adapter
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            initObstacleList()
+        }
+
     }
 
 
-    private fun initDummyData() { // ändra så den anropar ObtsaclePosition
-        dummyDataArrayList = arrayListOf<DummyData>()
+    private suspend fun initObstacleList() {
+        val obstacleUrl = "https://ims-group-4-backend-david.azurewebsites.net/api/obstacles/"
 
-        title = arrayOf(
-            "Cow",
-            "Dog",
-            "Child",
-            "Vase"
+        var responseObstacles = getObstaclesFromApi(obstacleUrl)
+        var responseObstacleBodyStr = responseObstacles.body?.string()
+        Log.d(TAG, "API Response: $responseObstacleBodyStr")
+
+        var obstacles: List<ObstaclePosition> = Json.decodeFromString(
+            ListSerializer(ObstaclePosition.serializer()),
+            responseObstacleBodyStr ?: "[]"
         )
+        Log.d(TAG, "obstacles: $obstacles")
 
-        x = arrayListOf(12, 41, 21, 23)
-        y = arrayListOf(11, 44, 26, 13)
+        obstacleList.populateObstacleList(obstacles)
 
-        for (i in title.indices) {
-            val data = DummyData(title[i], x[i], y[i])
-            dummyDataArrayList.add(data)
+        adapter.notifyDataSetChanged()
+    }
+
+    private suspend fun getObstaclesFromApi(url: String): Response {
+        val client = OkHttpClient()
+
+        val request = Request.Builder()
+            .url(url)
+            .build()
+
+        return withContext(Dispatchers.IO) {
+            client.newCall(request).execute()
         }
     }
-
-
-
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ObstaclesFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ObstaclesFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-
 
 }
 
