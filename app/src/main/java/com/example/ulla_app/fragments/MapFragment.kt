@@ -50,9 +50,6 @@ class MapFragment : Fragment() {
             if (isMowerPathViewShowing()){ // i have given up on life :)
                 switchToSurroundings()
                 switchMapButton.setText(R.string.switch_to_surroundings)
-
-
-
             } else {
                 switchToMowerPath()
                 switchMapButton.setText(R.string.switch_to_mower_path)
@@ -63,38 +60,42 @@ class MapFragment : Fragment() {
             override fun run() {
                 viewLifecycleOwner.lifecycleScope.launch {
                     var responsePositions = makeApiGetCall(positionsUrl)
+                    var responseBodyPositionsStr: String? = ""
+                    var positions:List<Coordinate> = emptyList()
+                    var lastMowerPosition = Coordinate(0,0)
 
                     if (!responsePositions.isSuccessful) {
                         Log.e(TAG, "Error: ${responsePositions.code}")
-                    }
+                    } else {
+                        responseBodyPositionsStr = responsePositions.body?.string()
+                        Log.d(TAG, "API Response: $responseBodyPositionsStr")
 
-                    var responseSurroundings = makeApiGetCall(surroundingsUrl)
-
-                    if (!responseSurroundings.isSuccessful) {
-                        Log.e(TAG, "Error ${responseSurroundings.code}")
-                    }
-
-
-                    var responseBodyPositionsStr = responsePositions.body?.string()
-                    Log.d(TAG, "API Response: $responseBodyPositionsStr")
-
-                    var positions: List<Coordinate> = Json.decodeFromString(
+                        positions = Json.decodeFromString(
                         ListSerializer(Coordinate.serializer()),
                         responseBodyPositionsStr ?: "[]"
-                    )
-                    Log.d(TAG, "positions: $positions")
+                        )
+                        Log.d(TAG, "positions: $positions")
 
-                    var lastMowerPosition = positions.last()
+                        lastMowerPosition = positions.last()
+                    }
 
 
-                    var responseBodySurroundingsStr = responseSurroundings.body?.string()
-                    Log.d(TAG, "API Response: $responseBodySurroundingsStr")
+                    var responseSurroundings = makeApiGetCall(surroundingsUrl)
+                    var responseBodySurroundingsStr: String? = ""
+                    var surroundings: List<Coordinate> = emptyList()
 
-                    var surroundings: List<Coordinate> = Json.decodeFromString(
-                        ListSerializer(Coordinate.serializer()),
-                        responseBodySurroundingsStr ?: "[]"
-                    )
-                    Log.d(TAG, "surroundings: $surroundings")
+                    if (!responseSurroundings.isSuccessful) {
+                        Log.e(TAG, "Error: ${responseSurroundings.code}")
+                    } else {
+                        responseBodySurroundingsStr = responseSurroundings.body?.string()
+                        Log.d(TAG, "API Response: $responseBodySurroundingsStr")
+
+                        surroundings= Json.decodeFromString(
+                            ListSerializer(Coordinate.serializer()),
+                            responseBodySurroundingsStr ?: "[]"
+                        )
+                        Log.d(TAG, "surroundings: $surroundings")
+                    }
 
 
                     clear()

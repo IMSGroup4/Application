@@ -70,18 +70,23 @@ class ObstaclesFragment : Fragment() {
         val obstacleUrl = "https://ims-group-4-backend-david.azurewebsites.net/api/obstacles/"
 
         var responseObstacles = makeApiGetCall(obstacleUrl)
-        var responseObstacleBodyStr = responseObstacles.body?.string()
-        Log.d(TAG, "API Response: $responseObstacleBodyStr")
+        if (!responseObstacles.isSuccessful) {
+            Log.e(TAG, "Error: ${responseObstacles.code}")
+        } else {
+            var responseObstacleBodyStr = responseObstacles.body?.string()
+            Log.d(TAG, "API Response: $responseObstacleBodyStr")
 
-        var obstacles: List<ObstaclePosition> = Json.decodeFromString(
-            ListSerializer(ObstaclePosition.serializer()),
-            responseObstacleBodyStr ?: "[]"
-        )
-        Log.d(TAG, "obstacles: $obstacles")
+            var obstacles: List<ObstaclePosition> = Json.decodeFromString(
+                ListSerializer(ObstaclePosition.serializer()),
+                responseObstacleBodyStr ?: "[]"
+            )
+            Log.d(TAG, "obstacles: $obstacles")
 
-        obstacleList.populateObstacleList(obstacles)
+            obstacleList.populateObstacleList(obstacles)
 
-        adapter.notifyDataSetChanged()
+            adapter.notifyDataSetChanged()
+        }
+
     }
 
 }
