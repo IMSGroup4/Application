@@ -33,4 +33,17 @@
         tools:ignore="MissingConstraints"
         android:layout_marginBottom="16sp"/>
 
+    <Button
+        android:id="@+id/new_session_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/main_color"
+        android:padding="15sp"
+        android:text="@string/new_session"
+        app:layout_constraintBottom_toTopOf="@id/connect_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints"
+        android:layout_marginBottom="16sp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

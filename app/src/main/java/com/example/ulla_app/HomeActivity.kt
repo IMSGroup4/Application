@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment
 import com.example.ulla_app.classes.WS_IS_CONNECTED
 import com.example.ulla_app.classes.myWebSocket
 import com.example.ulla_app.fragments.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 
 class HomeActivity : AppCompatActivity() {

@@ -9,6 +9,7 @@ import com.example.ulla_app.R
 import android.util.Log
 import android.widget.Button
 import androidx.lifecycle.lifecycleScope
+import com.example.ulla_app.api.makeApiGetCall
 import com.example.ulla_app.classes.MowerPathView
 import com.example.ulla_app.dataclasses.*
 import kotlinx.coroutines.Dispatchers
@@ -61,13 +62,13 @@ class MapFragment : Fragment() {
         val timerTask = object : TimerTask() {
             override fun run() {
                 viewLifecycleOwner.lifecycleScope.launch {
-                    var responsePositions = makeApiCall(positionsUrl)
+                    var responsePositions = makeApiGetCall(positionsUrl)
 
                     if (!responsePositions.isSuccessful) {
                         Log.e(TAG, "Error: ${responsePositions.code}")
                     }
 
-                    var responseSurroundings = makeApiCall(surroundingsUrl)
+                    var responseSurroundings = makeApiGetCall(surroundingsUrl)
 
                     if (!responseSurroundings.isSuccessful) {
                         Log.e(TAG, "Error ${responseSurroundings.code}")
@@ -148,18 +149,6 @@ class MapFragment : Fragment() {
 
     private fun isMowerPathViewShowing(): Boolean {
         return mowerPathView!!.getShowMowerPathView()
-    }
-
-    private suspend fun makeApiCall(url: String): Response {
-        val client = OkHttpClient()
-
-        val request = Request.Builder()
-            .url(url)
-            .build()
-
-        return withContext(Dispatchers.IO) {
-            client.newCall(request).execute()
-        }
     }
 
 

@@ -14,10 +14,14 @@ import androidx.core.view.isGone
 import androidx.lifecycle.lifecycleScope
 import com.example.ulla_app.HomeActivity
 import com.example.ulla_app.R
+import com.example.ulla_app.api.makeApiGetCall
 import com.example.ulla_app.classes.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.Response
 import okhttp3.WebSocket
 import org.json.JSONObject
 
@@ -41,6 +45,7 @@ class HomeFragment : Fragment() {
         val connectButton = view.findViewById<Button>(R.id.connect_button)
         val disconnectButton = view.findViewById<Button>(R.id.disconnect_button)
         val homeActivity = activity as HomeActivity
+        val newSessionButton = view.findViewById<Button>(R.id.new_session_button)
 
         if(WS_IS_CONNECTED){
             connectButton.visibility = View.GONE
@@ -73,6 +78,14 @@ class HomeFragment : Fragment() {
             }
             // change connected textview to disconnected
             homeActivity.updateConnectionStatus()
+        }
+
+        newSessionButton?.setOnClickListener {
+            viewLifecycleOwner.lifecycleScope.launch {
+                val response = makeApiGetCall("https://ims-group-4-backend-david.azurewebsites.net/api/new_session")
+
+
+            }
         }
 
     }
