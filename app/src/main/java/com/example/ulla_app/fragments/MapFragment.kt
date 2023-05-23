@@ -76,7 +76,7 @@ class MapFragment : Fragment() {
                         )
                         Log.d(TAG, "positions: $positions")
 
-                        lastMowerPosition = positions.last()
+                        lastMowerPosition = if (positions.isNotEmpty()) positions.last() else Coordinate(0,0)
                     }
 
 
