@@ -12,8 +12,8 @@
     <string name="connected">Connected</string>
     <string name="disconnected">Disconnected</string>
     <string name="delete">Delete</string>
+    <string name="new_session">New session</string>
     <string name="mowerIcon">Animated Mower Icon</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="map_fragment">Map fragment</string>
     <string name="obstacles_fragment">Obstacles fragment</string>
     <string name="home_fragment">Home fragment</string>

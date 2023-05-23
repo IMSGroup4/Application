@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ulla_app.R
+import com.example.ulla_app.api.makeApiGetCall
 import com.example.ulla_app.classes.ObstacleList
 import com.example.ulla_app.classes.RecyclerViewAdapter
 import com.example.ulla_app.dataclasses.ObstaclePosition
@@ -68,31 +69,24 @@ class ObstaclesFragment : Fragment() {
     private suspend fun initObstacleList() {
         val obstacleUrl = "https://ims-group-4-backend-david.azurewebsites.net/api/obstacles/"
 
-        var responseObstacles = getObstaclesFromApi(obstacleUrl)
-        var responseObstacleBodyStr = responseObstacles.body?.string()
-        Log.d(TAG, "API Response: $responseObstacleBodyStr")
+        var responseObstacles = makeApiGetCall(obstacleUrl)
+        if (!responseObstacles.isSuccessful) {
+            Log.e(TAG, "Error: ${responseObstacles.code}")
+        } else {
+            var responseObstacleBodyStr = responseObstacles.body?.string()
+            Log.d(TAG, "API Response: $responseObstacleBodyStr")
 
-        var obstacles: List<ObstaclePosition> = Json.decodeFromString(
-            ListSerializer(ObstaclePosition.serializer()),
-            responseObstacleBodyStr ?: "[]"
-        )
-        Log.d(TAG, "obstacles: $obstacles")
+            var obstacles: List<ObstaclePosition> = Json.decodeFromString(
+                ListSerializer(ObstaclePosition.serializer()),
+                responseObstacleBodyStr ?: "[]"
+            )
+            Log.d(TAG, "obstacles: $obstacles")
 
-        obstacleList.populateObstacleList(obstacles)
+            obstacleList.populateObstacleList(obstacles)
 
-        adapter.notifyDataSetChanged()
-    }
-
-    private suspend fun getObstaclesFromApi(url: String): Response {
-        val client = OkHttpClient()
-
-        val request = Request.Builder()
-            .url(url)
-            .build()
-
-        return withContext(Dispatchers.IO) {
-            client.newCall(request).execute()
+            adapter.notifyDataSetChanged()
         }
+
     }
 
 }
