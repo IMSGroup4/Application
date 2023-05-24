@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import com.example.ulla_app.R
 
@@ -15,7 +16,7 @@ class MowerPathView(context: Context, attrs: AttributeSet? = null) : View(contex
     private var showMowerPathView = true
 
     private val mowerPath = Path()
-    private val lidarPoints = mutableListOf<Pair<Float, Float>>()
+    private val obstacleCoordinatesPoints = mutableListOf<Pair<Float, Float>>()
     private var lastMowerPoint = Pair<Float, Float>(0F, 0F)
     private val mowerPathPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.BLUE
@@ -48,27 +49,19 @@ class MowerPathView(context: Context, attrs: AttributeSet? = null) : View(contex
         canvas.save()
         canvas.translate(centerX, centerY)
 
-        if(showMowerPathView){
-            //canvas.drawCircle(lastMowerPoint.first, lastMowerPoint.second, 30f, mowerPaint)
-            canvas.drawBitmap(
-                mowerBitmap,
-                lastMowerPoint.first - mowerBitmap.width / 2,
-                lastMowerPoint.second - mowerBitmap.height / 2,
-                null
-            )
-            canvas.drawPath(mowerPath, mowerPathPaint)
-        } else {
-            //canvas.drawCircle(0F, 0F, 30f, mowerPaint)
-            canvas.drawBitmap(
-                mowerBitmap,
-                -mowerBitmap.width / 2f,
-                -mowerBitmap.height / 2f,
-                null
-            )
-            for (point in lidarPoints) {
-                canvas.drawCircle(point.first, point.second, 20f, lidarPointPaint)
-            }
+
+        canvas.drawBitmap(
+            mowerBitmap,
+            lastMowerPoint.first - mowerBitmap.width / 2,
+            lastMowerPoint.second - mowerBitmap.height / 2,
+            null
+        )
+        canvas.drawPath(mowerPath, mowerPathPaint)
+
+        for (point in obstacleCoordinatesPoints) {
+            canvas.drawCircle(point.first, point.second, 20f, lidarPointPaint)
         }
+
 
 
 
@@ -81,8 +74,8 @@ class MowerPathView(context: Context, attrs: AttributeSet? = null) : View(contex
         invalidate()
     }
 
-    fun addLidarPoint(x: Float, y: Float) {
-        lidarPoints.add(Pair(x, y))
+    fun addObstacleCoordinatePoint(x: Float, y: Float) {
+        obstacleCoordinatesPoints.add(Pair(x, y))
         invalidate()
     }
 
@@ -98,7 +91,7 @@ class MowerPathView(context: Context, attrs: AttributeSet? = null) : View(contex
 
     fun clear() {
         mowerPath.reset()
-        lidarPoints.clear()
+        obstacleCoordinatesPoints.clear()
         invalidate()
     }
 

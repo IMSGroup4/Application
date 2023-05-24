@@ -12,14 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import com.example.ulla_app.api.makeApiGetCall
 import com.example.ulla_app.classes.MowerPathView
 import com.example.ulla_app.dataclasses.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
 import java.util.Timer
 import java.util.TimerTask
 
@@ -42,7 +37,7 @@ class MapFragment : Fragment() {
         mowerPathView = view?.findViewById<MowerPathView>(R.id.mowerPathView)
 
         val positionsUrl = "https://ims-group-4-backend-david.azurewebsites.net/api/positions"
-        val surroundingsUrl = "https://ims-group-4-backend-david.azurewebsites.net/api/surrounding"
+        val obstacleCoordinatesUrl = "https://ims-group-4-backend-david.azurewebsites.net/api/obstacles/coordinates"
 
         val switchMapButton = view.findViewById<Button>(R.id.switch_map_button)
         switchMapButton?.setOnClickListener {
@@ -80,21 +75,21 @@ class MapFragment : Fragment() {
                     }
 
 
-                    var responseSurroundings = makeApiGetCall(surroundingsUrl)
-                    var responseBodySurroundingsStr: String? = ""
-                    var surroundings: List<Coordinate> = emptyList()
+                    var responseObstacleCoordinates = makeApiGetCall(obstacleCoordinatesUrl)
+                    var responseBodyObstacleCoordinatesStr: String? = ""
+                    var obstacleCoordinates: List<Coordinate> = emptyList()
 
-                    if (!responseSurroundings.isSuccessful) {
-                        Log.e(TAG, "Error: ${responseSurroundings.code}")
+                    if (!responseObstacleCoordinates.isSuccessful) {
+                        Log.e(TAG, "Error: ${responseObstacleCoordinates.code}")
                     } else {
-                        responseBodySurroundingsStr = responseSurroundings.body?.string()
-                        Log.d(TAG, "API Response: $responseBodySurroundingsStr")
+                        responseBodyObstacleCoordinatesStr = responseObstacleCoordinates.body?.string()
+                        Log.d(TAG, "API Response: $responseBodyObstacleCoordinatesStr")
 
-                        surroundings= Json.decodeFromString(
+                        obstacleCoordinates= Json.decodeFromString(
                             ListSerializer(Coordinate.serializer()),
-                            responseBodySurroundingsStr ?: "[]"
+                            responseBodyObstacleCoordinatesStr ?: "[]"
                         )
-                        Log.d(TAG, "surroundings: $surroundings")
+                        Log.d(TAG, "surroundings: $obstacleCoordinates")
                     }
 
 
@@ -106,8 +101,9 @@ class MapFragment : Fragment() {
 
                     updateMowerPoint(lastMowerPosition.x.toFloat(), lastMowerPosition.y.toFloat())
 
-                    for (surrounding in surroundings) {
-                        addLidarPoint(surrounding.x.toFloat(), surrounding.y.toFloat())
+                    var i = 0
+                    for (coordinate in obstacleCoordinates) {
+                        addObstacleCoordinatePoint(coordinate.x.toFloat(), coordinate.y.toFloat())
                     }
 
                 }
@@ -128,8 +124,8 @@ class MapFragment : Fragment() {
         mowerPathView?.updateMowerPosition(x, y)
     }
 
-    private fun addLidarPoint(x: Float, y: Float) {
-        mowerPathView?.addLidarPoint(x, y)
+    private fun addObstacleCoordinatePoint(x: Float, y: Float) {
+        mowerPathView?.addObstacleCoordinatePoint(x, y)
     }
 
     private fun clear() {
