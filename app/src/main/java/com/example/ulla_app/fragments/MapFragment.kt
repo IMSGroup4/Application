@@ -111,7 +111,7 @@ class MapFragment : Fragment() {
         }
 
         timer = Timer()
-        timer?.scheduleAtFixedRate(timerTask, 0, 5000)
+        timer?.scheduleAtFixedRate(timerTask, 0, 2000)
     }
 
     override fun onDestroyView() {
